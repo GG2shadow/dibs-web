@@ -27,7 +27,6 @@ const eslintConfig = [
   ),
   {
     rules: {
-      'prettier/prettier': 'off', // Remove this line to enable Prettier again once rapid deployment is not required.
       '@next/next/no-html-link-for-pages': 'off',
       'react/jsx-key': 'off',
       'react/display-name': 'off',
