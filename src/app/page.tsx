@@ -18,7 +18,7 @@ export default function Home() {
       </CreamContainer>
       <Testimonials />
       <CreamContainer variant="bottom">
-        <Pricing />
+        {/* <Pricing /> */}
         <FAQ />
       </CreamContainer>
     </>

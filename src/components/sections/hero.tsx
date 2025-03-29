@@ -15,23 +15,23 @@ import { Button } from '@/components/ui/button';
 
 const features = [
   {
-    title: 'Tailored workflows',
-    description: 'Track progress across custom issue flows for your team.',
+    title: 'Commission-based',
+    description: 'We charge what we can achieve.',
     icon: CircleDot,
   },
   {
-    title: 'Cross-team projects',
-    description: 'Collaborate across teams and departments.',
+    title: 'Modular features',
+    description: 'Pay for only core features that matter.',
     icon: Blend,
   },
   {
-    title: 'Milestones',
-    description: 'Break projects down into concrete phases.',
+    title: 'All-in-one dashboard',
+    description: 'Your backend in one place.',
     icon: Diamond,
   },
   {
-    title: 'Progress insights',
-    description: 'Track scope, velocity, and progress over time.',
+    title: 'Powerful analysis',
+    description: 'Valuable insights right from your dashboard.',
     icon: ChartNoAxesColumn,
   },
 ];
@@ -42,24 +42,33 @@ export default function Hero() {
       <div className="container flex flex-col justify-between gap-8 md:gap-14 lg:flex-row lg:gap-20">
         {/* Left side - Main content */}
         <div className="flex-1">
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl md:whitespace-nowrap lg:text-6xl">
-            Mainline your product.
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl md:whitespace-nowrap lg:text-4xl">
+            Your superapp to supercharge your business.
           </h1>
 
-          <p className="text-muted-foreground mt-5 font-sans text-2xl font-medium md:text-3xl lg:text-4xl">
-            Mainline is the fit-for-purpose tool for planning and building
-            modern software products.
+          <p className="text-muted-foreground mt-5 font-inter text-2xl font-medium md:text-3xl lg:text-2xl">
+          Automated booking portals, digital loyalty cards and content-first TikTok marketing that keeps costs low and your business growing
           </p>
 
+          <div className="flex items-center mt-5">
+            <span className="mr-2 text-md font-medium text-dibs-red">Backed by</span>
+            <Image 
+              src="/logos/tsb-logo.png"
+              alt='Tsb Logo'
+              width="120"
+              height="120"
+            ></Image>
+          </div>
+
           <div className="mt-8 flex flex-wrap items-center gap-4">
-            <Button>Get started</Button>
-            <Link href="#">
+            <Button className="bg-dibs-red">Get started</Button>
+            <Link href="https://www.tiktok.com/@frites.sg/video/7468622715335838994" target="_blank">
               <Button
                 variant="outline"
                 className="from-background h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
               >
                 <span className="max-w-56 truncate text-start md:max-w-none">
-                  Mainline raises $12M from Roba Ventures
+                  We blew up Frites' video recently
                 </span>
                 <ArrowRight className="stroke-3" />
               </Button>
@@ -97,7 +106,7 @@ export default function Hero() {
       <div className="mt-12 max-lg:ml-6 max-lg:h-[550px] max-lg:overflow-hidden md:mt-20 lg:container lg:mt-24">
         <div className="relative h-[793px] w-full">
           <Image
-            src="/hero.webp"
+            src="/admin-dashboard.png"
             alt="hero"
             fill
             className="rounded-3xl object-cover object-left-top shadow-lg max-lg:rounded-tr-none"

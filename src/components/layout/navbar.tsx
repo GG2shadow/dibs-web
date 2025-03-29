@@ -22,23 +22,35 @@ import { cn } from '@/lib/utils';
 
 const ITEMS = [
   {
-    label: 'Features',
-    href: '#features',
+    label: 'Products',
+    href: '#products',
     dropdownItems: [
       {
-        title: 'Modern product teams',
+        title: 'Bookings',
         href: '/#feature-modern-teams',
         description:
-          'Mainline is built on the habits that make the best product teams successful',
+          'Easy-to-use, customisable booking portals',
       },
       {
-        title: 'Resource Allocation',
+        title: 'Stamps',
         href: '/#resource-allocation',
-        description: 'Mainline your resource allocation and execution',
+        description: 'Digital loyalty stamp cards',
       },
     ],
   },
-  { label: 'About Us', href: '/about' },
+  {
+    label: 'Services',
+    href: '#services',
+    dropdownItems: [
+      {
+        title: 'Marketing',
+        href: '/#feature-modern-teams',
+        description:
+          'Content-first TikTok marketing',
+      },
+    ],
+  },
+  { label: 'About', href: '/about' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Contact', href: '/contact' },
@@ -53,12 +65,13 @@ const Navbar = () => {
       <div className="flex items-center justify-between px-6 py-3">
         <Link href="/" className="flex shrink-0 items-center gap-2">
           <Image
-            src="/logo.svg"
+            src="/dibs-logo-red.png"
             alt="logo"
-            width={94}
-            height={18}
+            width={30}
+            height={30}
             className="dark:invert"
           />
+          <span className="font-sans font-bold text-lg text-dibs-red">Dibs</span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -113,7 +126,7 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="flex items-center gap-2.5">
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
           <Link href="/login" className="max-lg:hidden">
             <Button variant="outline">
               <span className="relative z-10">Login</span>

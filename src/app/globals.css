@@ -40,6 +40,8 @@
   --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
 
+  --color-dibs-red: hsl(var(--dibs-red));
+
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
   --color-chart-3: hsl(var(--chart-3));
@@ -159,7 +161,8 @@
     --border: 0 0% 89.8%; /* #E5E5E5 */
     --input: 0 0% 89.8%; /* #E5E5E5 */
     --ring: 240 10% 4%; /* #09090B */
-    --cream: 43 52% 94%; /* #F8F4E7 */
+    --cream: 0 100% 97%; /* #FFF7F3 */
+    --dibs-red: 0 85% 50%; /* #F22C39 */
     --chart-1: 12 76% 61%; /* #E65C41 */
     --chart-2: 173 58% 39%; /* #2A9D8F */
     --chart-3: 197 37% 24%; /* #264653 */

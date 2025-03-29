@@ -29,9 +29,9 @@ export const Features = () => {
         {/* Top dashed line with text */}
         <div className="relative flex items-center justify-center">
           <DashedLine className="text-muted-foreground" />
-          <span className="bg-muted text-muted-foreground absolute px-3 font-mono text-sm font-medium tracking-wide max-md:hidden">
-            MEASURE TWICE. CUT ONCE.
-          </span>
+          {/* <span className="bg-muted text-muted-foreground absolute px-3 font-mono text-sm font-medium tracking-wide max-md:hidden">
+            BUILT FOR GROWTH.
+          </span> */}
         </div>
 
         {/* Content */}

@@ -8,79 +8,58 @@ import { cn } from '@/lib/utils';
 const Logos = () => {
   const topRowCompanies = [
     {
-      name: 'Mercury',
-      logo: '/logos/mercury.svg',
-      width: 143,
+      name: 'BMT Gym',
+      logo: '/logos/bmtgym-logo.png',
+      width: 60,
       height: 26,
       href: 'https://mercury.com',
     },
     {
       name: 'Watershed',
-      logo: '/logos/watershed.svg',
-      width: 154,
+      logo: '/logos/frites-logo.png',
+      width: 116,
       height: 31,
       href: 'https://watershed.com',
     },
     {
       name: 'Retool',
-      logo: '/logos/retool.svg',
-      width: 113,
+      logo: '/logos/kitalulus-logo.png',
+      width: 100,
       height: 22,
       href: 'https://retool.com',
     },
     {
-      name: 'Descript',
-      logo: '/logos/descript.svg',
-      width: 112,
-      height: 27,
-      href: 'https://descript.com',
-    },
-  ];
-
-  const bottomRowCompanies = [
-    {
       name: 'Perplexity',
-      logo: '/logos/perplexity.svg',
-      width: 141,
+      logo: '/logos/talentport-logo.png',
+      width: 130,
       height: 32,
       href: 'https://perplexity.com',
     },
-    {
-      name: 'Monzo',
-      logo: '/logos/monzo.svg',
-      width: 104,
-      height: 18,
-      href: 'https://monzo.com',
-    },
-    {
-      name: 'Ramp',
-      logo: '/logos/ramp.svg',
-      width: 105,
-      height: 28,
-      href: 'https://ramp.com',
-    },
-    {
-      name: 'Raycast',
-      logo: '/logos/raycast.svg',
-      width: 128,
-      height: 33,
-      href: 'https://raycast.com',
-    },
-    {
-      name: 'Arc',
-      logo: '/logos/arc.svg',
-      width: 90,
-      height: 28,
-      href: 'https://arc.com',
-    },
   ];
+
+  // const bottomRowCompanies = [
+  //   // {
+  //   //   name: 'Monzo',
+  //   //   logo: '/logos/talentport-logo.png',
+  //   //   width: 104,
+  //   //   height: 18,
+  //   //   href: 'https://monzo.com',
+  //   // },
+  //   // {
+  //   //   name: 'Descript',
+  //   //   logo: '/logos/movynn-logo.png',
+  //   //   width: 112,
+  //   //   height: 27,
+  //   //   href: 'https://descript.com',
+  //   // },
+  // ];
 
   return (
     <section className="pb-28 lg:pb-32">
       <div className="container space-y-10 lg:space-y-16">
         <div className="text-center">
           <h2 className="mb-4 text-xl font-bold text-balance md:text-2xl lg:text-3xl">
-            Powering the world's best product teams.
+            Powering Singapore's fastest-growing teams.
             <br className="max-md:hidden" />
             <span className="text-muted-foreground">
               From next-gen startups to established enterprises.
@@ -93,11 +72,11 @@ const Logos = () => {
           <LogoRow companies={topRowCompanies} gridClassName="grid-cols-4" />
 
           {/* Bottom row - 5 logos */}
-          <LogoRow
+          {/* <LogoRow
             companies={bottomRowCompanies}
             gridClassName="grid-cols-5"
             direction="right"
-          />
+          /> */}
         </div>
       </div>
     </section>
@@ -137,7 +116,7 @@ const LogoRow = ({ companies, gridClassName, direction }: LogoRowProps) => {
                 alt={`${company.name} logo`}
                 width={company.width}
                 height={company.height}
-                className="object-contain transition-opacity hover:opacity-70"
+                className="object-contain transition-opacity hover:opacity-70 grayscale"
               />
             </Link>
           ))}
@@ -159,7 +138,7 @@ const LogoRow = ({ companies, gridClassName, direction }: LogoRowProps) => {
                 alt={`${company.name} logo`}
                 width={company.width}
                 height={company.height}
-                className="object-contain"
+                className="object-contain grayscale"
               />
             </Link>
           ))}

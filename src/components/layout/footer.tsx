@@ -19,20 +19,26 @@ export function Footer() {
     { name: 'LinkedIn', href: '#' },
   ];
 
-  const legal = [{ name: 'Privacy Policy', href: '/privacy' }];
+  const legal = [{ name: '© 2023 - 2025 Dibs Everything Pte Ltd. All rights reserved. | UEN: 202418462H', href: '/privacy' }];
 
   return (
-    <footer className="flex flex-col items-center gap-14 pt-28 lg:pt-32">
+    <footer className="flex flex-col items-center gap-14 pt-28 lg:pt-32 pb-20">
       <div className="container space-y-3 text-center">
         <h2 className="text-2xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
-          Start your free trial today
+          Book a non-obligatory call today
         </h2>
         <p className="text-muted-foreground mx-auto max-w-xl leading-snug font-medium text-balance">
-          Mainline is the fit-for-purpose tool for planning and building modern
-          software products.
+          <Image
+            src="dibs-logo-red.png"
+            alt="Dibs Logo"
+            width={20}
+            height={20}
+            className="inline-block mr-2"
+          />
+          Dibs is your superapp to supercharge your business.
         </p>
         <div>
-          <Button size="lg" className="mt-4">
+          <Button size="lg" className="mt-4 bg-dibs-red">
             Get started
           </Button>
         </div>
@@ -74,13 +80,13 @@ export function Footer() {
           ))}
         </ul>
       </nav>
-      <Image
+      {/* <Image
         src="/footer.svg"
         alt="Mainline"
         width={1570}
         height={375}
         className="mt-10 md:mt-14 lg:mt-20"
-      />
+      /> */}
     </footer>
   );
 }
