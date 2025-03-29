@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation';
 
 import { ChevronRight } from 'lucide-react';
 
-import { ThemeToggle } from '@/components/theme-toggle';
+// import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -28,8 +28,7 @@ const ITEMS = [
       {
         title: 'Bookings',
         href: '/#feature-modern-teams',
-        description:
-          'Easy-to-use, customisable booking portals',
+        description: 'Easy-to-use, customisable booking portals',
       },
       {
         title: 'Stamps',
@@ -45,8 +44,7 @@ const ITEMS = [
       {
         title: 'Marketing',
         href: '/#feature-modern-teams',
-        description:
-          'Content-first TikTok marketing',
+        description: 'Content-first TikTok marketing',
       },
     ],
   },
@@ -71,7 +69,9 @@ const Navbar = () => {
             height={30}
             className="dark:invert"
           />
-          <span className="font-sans font-bold text-lg text-dibs-red">Dibs</span>
+          <span className="text-dibs-red font-sans text-lg font-bold">
+            Dibs
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

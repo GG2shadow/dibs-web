@@ -116,7 +116,7 @@ const LogoRow = ({ companies, gridClassName, direction }: LogoRowProps) => {
                 alt={`${company.name} logo`}
                 width={company.width}
                 height={company.height}
-                className="object-contain transition-opacity hover:opacity-70 grayscale"
+                className="object-contain grayscale transition-opacity hover:opacity-70"
               />
             </Link>
           ))}

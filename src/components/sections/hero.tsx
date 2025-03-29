@@ -46,15 +46,18 @@ export default function Hero() {
             Your superapp to supercharge your business.
           </h1>
 
-          <p className="text-muted-foreground mt-5 font-inter text-2xl font-medium md:text-3xl lg:text-2xl">
-          Automated booking portals, digital loyalty cards and content-first TikTok marketing that keeps costs low and your business growing
+          <p className="text-muted-foreground font-inter mt-5 text-2xl font-medium md:text-3xl lg:text-2xl">
+            Automated booking portals, digital loyalty cards and content-first
+            TikTok marketing that keeps costs low and your business growing
           </p>
 
-          <div className="flex items-center mt-5">
-            <span className="mr-2 text-md font-medium text-dibs-red">Backed by</span>
-            <Image 
+          <div className="mt-5 flex items-center">
+            <span className="text-md text-dibs-red mr-2 font-medium">
+              Backed by
+            </span>
+            <Image
               src="/logos/tsb-logo.png"
-              alt='Tsb Logo'
+              alt="Tsb Logo"
               width="120"
               height="120"
             ></Image>
@@ -62,7 +65,10 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Button className="bg-dibs-red">Get started</Button>
-            <Link href="https://www.tiktok.com/@frites.sg/video/7468622715335838994" target="_blank">
+            <Link
+              href="https://www.tiktok.com/@frites.sg/video/7468622715335838994"
+              target="_blank"
+            >
               <Button
                 variant="outline"
                 className="from-background h-auto gap-2 bg-linear-to-r to-transparent shadow-md"
