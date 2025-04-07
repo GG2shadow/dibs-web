@@ -48,7 +48,7 @@ export default function Hero() {
 
           <p className="text-muted-foreground font-inter mt-5 text-2xl font-medium md:text-3xl lg:text-2xl">
             Automated booking portals, digital loyalty cards and content-first
-            TikTok marketing that keeps costs low and your business growing
+            TikTok marketing that keeps costs low and your business growing.
           </p>
 
           <div className="mt-5 flex items-center">

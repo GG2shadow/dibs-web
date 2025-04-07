@@ -10,52 +10,22 @@ import { cn } from '@/lib/utils';
 
 const categories = [
   {
-    title: 'Support',
-    questions: [
-      {
-        question: 'How do I update my account without breaking my laptop?',
-        answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
-      },
-      {
-        question: 'Is support free, or do I need to Google everything?',
-        answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
-      },
-      {
-        question: 'Are you going to be subsumed by AI?',
-        answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
-      },
-    ],
-  },
-  {
     title: 'Your account',
     questions: [
       {
-        question: 'Is support free, or do I need to Google everything?',
+        question: 'How do I get started to try the product and services?',
         answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
-      },
-      {
-        question: 'Are you going to be subsumed by AI?',
-        answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
+          'Fill up the contact form below and we\'\ll get in touch within hours.',
       },
     ],
   },
   {
-    title: 'Other questions',
+    title: 'Support',
     questions: [
       {
-        question: 'Is support free, or do I need to Google everything?',
+        question: 'How can I contact customer support?',
         answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
-      },
-      {
-        question: 'Are you going to be subsumed by AI?',
-        answer:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus voluptates deserunt officia temporibus dignissimos.',
+          'You can reach our customer support team via email at hello@usedibs.com.',
       },
     ],
   },

@@ -13,7 +13,7 @@ export default function Home() {
         <Hero />
         <Logos />
         <Features />
-        <ResourceAllocation />
+        {/* <ResourceAllocation /> */}
       </CreamContainer>
       <Testimonials />
       <CreamContainer variant="bottom">

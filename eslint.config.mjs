@@ -27,7 +27,6 @@ const eslintConfig = [
   ),
   {
     rules: {
-      'prettier/prettier': 'warn',
       '@next/next/no-html-link-for-pages': 'off',
       'react/jsx-key': 'off',
       'react/display-name': 'off',

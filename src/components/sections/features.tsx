@@ -9,16 +9,16 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const items = [
   {
-    title: 'Purpose-built for product development',
-    image: '/features/triage-card.svg',
+    title: 'Marketing',
+    image: '/features/tiktok-account.jpg',
   },
   {
-    title: 'Manage projects end-to-end',
-    image: '/features/cycle-card.svg',
+    title: 'Bookings',
+    image: '/features/booking-listing.png',
   },
   {
-    title: 'Build momentum and healthy habits',
-    image: '/features/overview-card.svg',
+    title: 'Stamps',
+    image: '/features/stamp-card.png',
   },
 ];
 
@@ -37,12 +37,10 @@ export const Features = () => {
         {/* Content */}
         <div className="mx-auto mt-10 grid max-w-4xl items-center gap-3 md:gap-0 lg:mt-24 lg:grid-cols-2">
           <h2 className="text-2xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
-            Made for modern product teams
+            Made for fast-growing teams
           </h2>
           <p className="text-muted-foreground leading-snug font-medium">
-            Mainline is built on the habits that make the best product teams
-            successful: staying focused, moving quickly, and always aiming for
-            high-quality work.
+            Dibs has everything you need in one place. No more switching between multiple platforms to grow your business.
           </p>
         </div>
 
@@ -57,7 +55,7 @@ export const Features = () => {
                       src={item.image}
                       alt={`${item.title} interface`}
                       fill
-                      className="object-cover object-left-top ps-4 pt-2"
+                      className="object-cover object-left-top ps-4 pt-2 rounded-tl-4xl"
                     />
                     <div className="from-background absolute inset-0 z-10 bg-linear-to-t via-transparent to-transparent" />
                   </div>
