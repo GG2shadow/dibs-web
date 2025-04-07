@@ -15,8 +15,8 @@ export function Footer() {
   ];
 
   const social = [
-    { name: 'Xwitter', href: '#' },
-    { name: 'LinkedIn', href: '#' },
+    { name: 'TikTok', href: 'https://www.tiktok.com/@dibshq' },
+    { name: 'Instagram', href: 'https://www.instagram.com/dibshq/' },
   ];
 
   const legal = [
