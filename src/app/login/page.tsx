@@ -22,6 +22,10 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetSuccess, setResetSuccess] = useState(false);
 
   useEffect(() => {
     const checkSession = async () => {
@@ -78,6 +82,30 @@ const Login = () => {
       setErrorMsg(error.message);
     }
     setLoading(false);
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setResetLoading(true);
+    setErrorMsg(null);
+
+    const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
+      redirectTo: `${window.location.origin}/reset-password?type=recovery`,
+    });
+
+    if (error) {
+      setErrorMsg(error.message);
+    } else {
+      setResetSuccess(true);
+    }
+    setResetLoading(false);
+  };
+
+  const closeModal = () => {
+    setShowForgotPassword(false);
+    setResetEmail('');
+    setErrorMsg(null);
+    setResetSuccess(false);
   };
 
   return (
@@ -139,9 +167,13 @@ const Login = () => {
                         Remember me
                       </label>
                     </div>
-                    <a href="#" className="text-primary text-sm font-medium">
+                    <button
+                      type="button"
+                      onClick={() => setShowForgotPassword(true)}
+                      className="text-primary text-sm font-medium"
+                    >
                       Forgot password
-                    </a>
+                    </button>
                   </div>
                   <Button
                     type="submit"
@@ -169,6 +201,66 @@ const Login = () => {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Forgot Password Modal */}
+            {showForgotPassword && (
+              <div
+                className="fixed inset-0 flex items-center justify-center bg-black/50"
+                onClick={closeModal}
+              >
+                <Card
+                  className="w-full max-w-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <CardHeader>
+                    <h2 className="text-2xl font-bold">Reset Password</h2>
+                    <p className="text-muted-foreground">
+                      Enter your email address and we'll send you a link to
+                      reset your password.
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    <form
+                      onSubmit={handleForgotPassword}
+                      className="grid gap-4"
+                    >
+                      <Input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={resetEmail}
+                        onChange={(e) => setResetEmail(e.target.value)}
+                        required
+                      />
+                      {errorMsg && (
+                        <p className="text-sm text-red-500">{errorMsg}</p>
+                      )}
+                      {resetSuccess && (
+                        <p className="text-sm text-green-500">
+                          Password reset link has been sent to your email.
+                        </p>
+                      )}
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="flex-1"
+                          onClick={closeModal}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          className="flex-1"
+                          disabled={resetLoading}
+                        >
+                          {resetLoading ? 'Sending...' : 'Send Reset Link'}
+                        </Button>
+                      </div>
+                    </form>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </div>
         </div>
       </section>
