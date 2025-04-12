@@ -34,7 +34,7 @@ export function Footer() {
         </h2>
         <p className="text-muted-foreground mx-auto max-w-xl leading-snug font-medium text-balance">
           <Image
-            src="dibs-logo-red.png"
+            src="/dibs-logo-red.png"
             alt="Dibs Logo"
             width={20}
             height={20}

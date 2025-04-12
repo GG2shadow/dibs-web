@@ -6,7 +6,7 @@ import type { Metadata } from 'next';
 import { Footer } from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import { ThemeProvider } from '@/components/theme-provider';
-import './globals.css';
+import '../globals.css';
 
 const dmSans = localFont({
   src: [
