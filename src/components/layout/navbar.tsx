@@ -33,7 +33,7 @@ const ITEMS = [
       },
       {
         title: 'Stamps',
-        href: '/#resource-allocation',
+        href: '/s/admin',
         description: 'Digital loyalty stamp cards',
       },
     ],

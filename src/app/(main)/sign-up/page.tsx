@@ -93,7 +93,9 @@ const Signup = () => {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-semibold">Dibs</span>
+                  <span className="text-dibs-red text-lg font-semibold">
+                    Dibs
+                  </span>
                 </div>
                 <p className="mb-2 text-2xl font-bold">Start your free trial</p>
                 <p className="text-muted-foreground">
@@ -140,7 +142,7 @@ const Signup = () => {
                   )}
                   <Button
                     type="submit"
-                    className="mt-2 w-full"
+                    className="mt-2 w-full bg-[var(--color-dibs-red)] hover:bg-[var(--color-dibs-red-hover)] active:bg-[var(--color-dibs-red-pressed)]"
                     disabled={loading}
                   >
                     {loading ? 'Creating account...' : 'Create an account'}

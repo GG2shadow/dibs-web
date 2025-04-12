@@ -122,7 +122,9 @@ const Login = () => {
                     width={32}
                     height={32}
                   />
-                  <span className="text-lg font-semibold">Dibs</span>
+                  <span className="text-dibs-red text-lg font-semibold">
+                    Dibs
+                  </span>
                 </div>
                 <p className="mb-2 text-2xl font-bold">Welcome back</p>
                 <p className="text-muted-foreground">
@@ -177,7 +179,7 @@ const Login = () => {
                   </div>
                   <Button
                     type="submit"
-                    className="mt-2 w-full"
+                    className="mt-2 w-full bg-[var(--color-dibs-red)] hover:bg-[var(--color-dibs-red-hover)] active:bg-[var(--color-dibs-red-pressed)]"
                     disabled={loading}
                   >
                     {loading ? 'Signing in...' : 'Sign in'}
@@ -250,7 +252,7 @@ const Login = () => {
                         </Button>
                         <Button
                           type="submit"
-                          className="flex-1"
+                          className="flex-1 bg-[var(--color-dibs-red)] hover:bg-[var(--color-dibs-red-hover)] active:bg-[var(--color-dibs-red-pressed)]"
                           disabled={resetLoading}
                         >
                           {resetLoading ? 'Sending...' : 'Send Reset Link'}
