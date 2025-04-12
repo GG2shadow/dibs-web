@@ -127,7 +127,7 @@ export function AppSidebar({
                   height={24}
                   className="w-6 transition-all duration-300"
                 />
-                <h1 className="text-primary font-dm-sans text-xl font-bold">
+                <h1 className="text-dibs-red font-dm-sans text-xl font-bold">
                   Dibs
                 </h1>
               </a>

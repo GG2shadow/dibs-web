@@ -152,6 +152,7 @@ const SidebarProvider = React.forwardRef<
               {
                 '--sidebar-width': SIDEBAR_WIDTH,
                 '--sidebar-width-icon': SIDEBAR_WIDTH_ICON,
+                backgroundColor: 'hsl(var(--sidebar-background))',
                 ...style,
               } as React.CSSProperties
             }
@@ -195,8 +196,13 @@ const Sidebar = React.forwardRef<
     if (collapsible === 'none') {
       return (
         <div
+          style={
+            {
+              backgroundColor: 'hsl(var(--sidebar-background))',
+            } as React.CSSProperties
+          }
           className={cn(
-            'bg-sidebar text-sidebar-foreground flex h-full w-[--sidebar-width] min-w-[--sidebar-width] flex-col',
+            'bg-sidebar text-sidebar-foreground flex h-full w-[var(--sidebar-width)] flex-col',
             className,
           )}
           ref={ref}
@@ -213,10 +219,11 @@ const Sidebar = React.forwardRef<
           <SheetContent
             data-sidebar="sidebar"
             data-mobile="true"
-            className="bg-sidebar text-sidebar-foreground w-[--sidebar-width] min-w-[--sidebar-width] p-0 [&>button]:hidden"
+            className="bg-sidebar text-sidebar-foreground w-[var(--sidebar-width)] p-0 [&>button]:hidden"
             style={
               {
                 '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+                backgroundColor: 'hsl(var(--sidebar-background))',
               } as React.CSSProperties
             }
             side={side}
@@ -234,7 +241,7 @@ const Sidebar = React.forwardRef<
     return (
       <div
         ref={ref}
-        className="group peer text-sidebar-foreground hidden md:block"
+        className="text-sidebar-foreground group peer hidden md:block"
         data-state={state}
         data-collapsible={state === 'collapsed' ? collapsible : ''}
         data-variant={variant}
@@ -243,7 +250,7 @@ const Sidebar = React.forwardRef<
         {/* This is what handles the sidebar gap on desktop */}
         <div
           className={cn(
-            'relative w-[--sidebar-width] min-w-[--sidebar-width] bg-transparent transition-[width] duration-200 ease-linear',
+            'relative w-[var(--sidebar-width)] bg-transparent transition-[width] duration-200 ease-linear',
             'group-data-[collapsible=offcanvas]:w-0',
             'group-data-[side=right]:rotate-180',
             variant === 'floating' || variant === 'inset'
@@ -253,20 +260,25 @@ const Sidebar = React.forwardRef<
         />
         <div
           className={cn(
-            'fixed inset-y-0 z-10 hidden h-svh w-[--sidebar-width] min-w-[--sidebar-width] transition-[left,right,width] duration-200 ease-linear md:flex',
+            'fixed inset-y-0 z-10 hidden h-svh w-[var(--sidebar-width)] transition-[left,right,width] duration-200 ease-linear md:flex',
             side === 'left'
               ? 'left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]'
               : 'right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]',
             // Adjust the padding for floating and inset variants.
             variant === 'floating' || variant === 'inset'
               ? 'p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4)_+2px)]'
-              : 'group-data-[collapsible=icon]:w-[--sidebar-width-icon] group-data-[side=left]:border-r group-data-[side=right]:border-l',
+              : 'group-data-[collapsible=icon]:w-[var(--sidebar-width-icon)] group-data-[side=left]:border-r group-data-[side=right]:border-l',
             className,
           )}
           {...props}
         >
           <div
             data-sidebar="sidebar"
+            style={
+              {
+                backgroundColor: 'hsl(var(--sidebar-background))',
+              } as React.CSSProperties
+            }
             className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow"
           >
             {children}
@@ -318,6 +330,11 @@ const SidebarRail = React.forwardRef<
       tabIndex={-1}
       onClick={toggleSidebar}
       title="Toggle Sidebar"
+      style={
+        {
+          backgroundColor: 'hsl(var(--sidebar-background))',
+        } as React.CSSProperties
+      }
       className={cn(
         'hover:after:bg-sidebar-border absolute inset-y-0 z-20 hidden w-4 -translate-x-1/2 transition-all ease-linear group-data-[side=left]:-right-4 group-data-[side=right]:left-0 after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] sm:flex',
         '[[data-side=left]_&]:cursor-w-resize [[data-side=right]_&]:cursor-e-resize',
@@ -407,6 +424,11 @@ const SidebarSeparator = React.forwardRef<
     <Separator
       ref={ref}
       data-sidebar="separator"
+      style={
+        {
+          backgroundColor: 'hsl(var(--sidebar-background))',
+        } as React.CSSProperties
+      }
       className={cn('bg-sidebar-border mx-2 w-auto', className)}
       {...props}
     />
@@ -478,6 +500,11 @@ const SidebarGroupAction = React.forwardRef<
     <Comp
       ref={ref}
       data-sidebar="group-action"
+      style={
+        {
+          backgroundColor: 'hsl(var(--sidebar-background))',
+        } as React.CSSProperties
+      }
       className={cn(
         'text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground absolute top-3.5 right-3 flex aspect-square w-5 items-center justify-center rounded-md p-0 transition-transform outline-none focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
@@ -624,6 +651,11 @@ const SidebarMenuAction = React.forwardRef<
     <Comp
       ref={ref}
       data-sidebar="menu-action"
+      style={
+        {
+          backgroundColor: 'hsl(var(--sidebar-background))',
+        } as React.CSSProperties
+      }
       className={cn(
         'text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground peer-hover/menu-button:text-sidebar-accent-foreground absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 transition-transform outline-none focus-visible:ring-2 [&>svg]:size-4 [&>svg]:shrink-0',
         // Increases the hit area of the button on mobile.
@@ -740,6 +772,11 @@ const SidebarMenuSubButton = React.forwardRef<
       data-sidebar="menu-sub-button"
       data-size={size}
       data-active={isActive}
+      style={
+        {
+          backgroundColor: 'hsl(var(--sidebar-background))',
+        } as React.CSSProperties
+      }
       className={cn(
         'text-sidebar-foreground ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground [&>svg]:text-sidebar-accent-foreground flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
         'data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground',

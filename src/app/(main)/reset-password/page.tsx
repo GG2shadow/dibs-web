@@ -37,7 +37,7 @@ const ResetPassword = () => {
 
       // If we have a session but not in recovery, go to dashboard
       if (session && !isRecovery) {
-        router.push('/dashboard');
+        router.push('/');
         return;
       }
 

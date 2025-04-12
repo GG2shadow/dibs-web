@@ -212,7 +212,7 @@ const Navbar = () => {
                       openDropdown === link.label ? null : link.label,
                     )
                   }
-                  className="text-primary flex w-full items-center justify-between text-base font-medium"
+                  className="text-dibs-red flex w-full items-center justify-between text-base font-medium"
                 >
                   {link.label}
                   <ChevronRight
@@ -242,7 +242,7 @@ const Navbar = () => {
                         }}
                       >
                         <div className="transition-transform duration-200 group-hover:translate-x-1">
-                          <div className="text-primary font-medium">
+                          <div className="text-dibs-red font-medium">
                             {item.title}
                           </div>
 
@@ -260,7 +260,7 @@ const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  'text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0',
+                  'text-dibs-red hover:text-dibs-red/80 py-4 text-base font-medium transition-colors first:pt-0 last:pb-0',
                   pathname === link.href && 'text-muted-foreground',
                 )}
                 onClick={() => setIsMenuOpen(false)}
@@ -275,14 +275,14 @@ const Navbar = () => {
                 handleLogout();
                 setIsMenuOpen(false);
               }}
-              className="text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors"
+              className="text-dibs-red hover:text-dibs-red/80 py-4 text-base font-medium transition-colors"
             >
               Logout
             </button>
           ) : (
             <Link
               href="/login"
-              className="text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors"
+              className="text-dibs-red hover:text-dibs-red/80 py-4 text-base font-medium transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               Login

@@ -235,7 +235,7 @@ const FeatureSections = ({ selectedPlan }: { selectedPlan: number }) => (
         {section.features.map((feature, featureIndex) => (
           <div
             key={featureIndex}
-            className="text-primary grid grid-cols-2 font-medium max-md:border-b md:grid-cols-4"
+            className="text-dibs-red grid grid-cols-2 font-medium max-md:border-b md:grid-cols-4"
           >
             <span className="inline-flex items-center py-4">
               {feature.name}

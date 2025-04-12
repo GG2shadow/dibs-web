@@ -69,7 +69,7 @@ const Signup = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`,
+        redirectTo: `${window.location.origin}/`,
       },
     });
 
@@ -158,7 +158,7 @@ const Signup = () => {
                 </form>
                 <div className="text-muted-foreground mx-auto mt-8 flex justify-center gap-1 text-sm">
                   <p>Already have an account?</p>
-                  <Link href="/login" className="text-primary font-medium">
+                  <Link href="/login" className="text-dibs-red font-medium">
                     Log in
                   </Link>
                 </div>

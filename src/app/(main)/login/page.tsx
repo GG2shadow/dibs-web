@@ -33,7 +33,7 @@ const Login = () => {
         data: { session },
       } = await supabase.auth.getSession();
       if (session) {
-        router.push('/dashboard');
+        router.push('/');
       }
     };
 
@@ -62,7 +62,7 @@ const Login = () => {
             '',
         });
       }
-      router.push('/dashboard');
+      router.push('/');
     }
     setLoading(false);
   };
@@ -74,7 +74,7 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/dashboard`,
+        redirectTo: `${window.location.origin}/`,
       },
     });
 
@@ -170,7 +170,7 @@ const Login = () => {
                     <button
                       type="button"
                       onClick={() => setShowForgotPassword(true)}
-                      className="text-primary text-sm font-medium"
+                      className="text-dibs-red text-sm font-medium"
                     >
                       Forgot password
                     </button>
@@ -195,7 +195,7 @@ const Login = () => {
                 </form>
                 <div className="text-muted-foreground mx-auto mt-8 flex justify-center gap-1 text-sm">
                   <p>Don&apos;t have an account?</p>
-                  <Link href="/sign-up" className="text-primary font-medium">
+                  <Link href="/sign-up" className="text-dibs-red font-medium">
                     Sign up
                   </Link>
                 </div>
