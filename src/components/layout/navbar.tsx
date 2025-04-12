@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { ChevronRight } from 'lucide-react';
 
@@ -18,6 +18,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
+import { supabase } from '@/lib/supabaseClient';
 import { cn } from '@/lib/utils';
 
 const ITEMS = [
@@ -56,7 +57,32 @@ const ITEMS = [
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Check auth state on mount
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsLoggedIn(!!session);
+    });
+
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setIsLoggedIn(!!session);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push('/login');
+  };
 
   return (
     <header className="bg-background/70 absolute top-5 left-1/2 z-50 w-[min(90%,700px)] -translate-x-1/2 rounded-full border backdrop-blur-md lg:top-12">
@@ -127,11 +153,21 @@ const Navbar = () => {
         {/* Auth Buttons */}
         <div className="flex items-center gap-2.5">
           {/* <ThemeToggle /> */}
-          <Link href="/login" className="max-lg:hidden">
-            <Button variant="outline">
-              <span className="relative z-10">Login</span>
+          {isLoggedIn ? (
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="max-lg:hidden"
+            >
+              <span className="relative z-10">Logout</span>
             </Button>
-          </Link>
+          ) : (
+            <Link href="/login" className="max-lg:hidden">
+              <Button variant="outline">
+                <span className="relative z-10">Login</span>
+              </Button>
+            </Link>
+          )}
 
           {/* Hamburger Menu Button (Mobile Only) */}
           <button
@@ -232,6 +268,25 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ),
+          )}
+          {isLoggedIn ? (
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsMenuOpen(false);
+              }}
+              className="text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="text-primary hover:text-primary/80 py-4 text-base font-medium transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Login
+            </Link>
           )}
         </nav>
       </div>

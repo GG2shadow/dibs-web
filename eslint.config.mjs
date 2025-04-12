@@ -46,6 +46,13 @@ const eslintConfig = [
       '@typescript-eslint/no-empty-object-type': 'off',
       'react/no-unescaped-entities': 'off',
       'no-console': 'error',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'prettier/prettier': [
+        'error',
+        {
+          endOfLine: 'auto',
+        },
+      ],
       'import/order': [
         'error',
         {

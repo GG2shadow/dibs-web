@@ -7,5 +7,6 @@
   "printWidth": 80,
   "jsxSingleQuote": false,
   "plugins": ["prettier-plugin-tailwindcss"],
-  "organizeImportsSkipDestructiveCodeActions": true
+  "organizeImportsSkipDestructiveCodeActions": true,
+  "endOfLine": "auto"
 }
