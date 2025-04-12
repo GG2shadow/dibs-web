@@ -173,7 +173,7 @@ const VerifyOTPForm = ({
               <OurLabel>Please verify the OTP.</OurLabel>
               <div className="text-muted-foreground mx-auto flex justify-start gap-1 text-sm">
                 <p>Enter the 6-digit code sent to</p>
-                <p className="text-primary">+{phoneNumber}.</p>
+                <p className="text-dibs-red">+{phoneNumber}.</p>
               </div>
               <div className="mt-2 grid grid-cols-6 gap-2">
                 {otp.map((digit, index) => (

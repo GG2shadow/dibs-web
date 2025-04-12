@@ -28,7 +28,7 @@ const ITEMS = [
     dropdownItems: [
       {
         title: 'Bookings',
-        href: '/#feature-modern-teams',
+        href: '/b/name',
         description: 'Easy-to-use, customisable booking portals',
       },
       {
