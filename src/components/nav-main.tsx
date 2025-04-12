@@ -29,7 +29,7 @@ export function NavMain({ activeTab, items, setActiveTab }: NavMainProps) {
           {/* <SidebarMenuItem className="flex items-center gap-2">
             <SidebarMenuButton
               tooltip="Quick Create"
-              className="min-w-8 bg-primary text-dibs-red-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-dibs-red-foreground active:bg-primary/90 active:text-dibs-red-foreground"
+              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
               <PlusCircleIcon />
               <span>Quick Create</span>
