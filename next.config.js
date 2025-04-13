@@ -11,3 +11,4 @@ const nextConfig = {
 }
 
 module.exports = withMDX(nextConfig)
+
