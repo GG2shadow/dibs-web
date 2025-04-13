@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
     // deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true, // ignores Prettier for Vercel deployment
   }
 };
 const withMDX = createMDX({
