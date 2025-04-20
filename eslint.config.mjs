@@ -45,7 +45,6 @@ const eslintConfig = [
       'jsx-a11y/heading-has-content': 'off',
       '@typescript-eslint/no-empty-object-type': 'off',
       'react/no-unescaped-entities': 'off',
-      'no-console': 'error',
       '@typescript-eslint/no-unused-vars': 'off',
       'prettier/prettier': [
         'error',

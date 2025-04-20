@@ -81,7 +81,6 @@ export function DatePicker() {
           mode="single"
           selected={selectedDate}
           onSelect={handleDaySelect}
-          autoFocus
         />
 
         {selectedDate && (

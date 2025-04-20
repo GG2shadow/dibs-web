@@ -31,11 +31,15 @@ export function LandingPageCustomisationForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Store Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="storeName"
+            className="block text-sm font-medium text-gray-700"
+          >
             Store Name
           </label>
           <input
             type="text"
+            id="storeName"
             name="storeName"
             value={formData.storeName}
             onChange={handleChange}
@@ -47,10 +51,14 @@ export function LandingPageCustomisationForm() {
 
         {/* Tagline */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="tagline"
+            className="block text-sm font-medium text-gray-700"
+          >
             Tagline
           </label>
           <textarea
+            id="tagline"
             name="tagline"
             value={formData.tagline}
             onChange={handleChange}
@@ -62,11 +70,15 @@ export function LandingPageCustomisationForm() {
 
         {/* Logo URL */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="logoUrl"
+            className="block text-sm font-medium text-gray-700"
+          >
             Logo URL
           </label>
           <input
             type="url"
+            id="logoUrl"
             name="logoUrl"
             value={formData.logoUrl}
             onChange={handleChange}
@@ -77,11 +89,15 @@ export function LandingPageCustomisationForm() {
 
         {/* Primary Color */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="primaryColor"
+            className="block text-sm font-medium text-gray-700"
+          >
             Primary Color
           </label>
           <input
             type="color"
+            id="primaryColor"
             name="primaryColor"
             value={formData.primaryColor}
             onChange={handleChange}

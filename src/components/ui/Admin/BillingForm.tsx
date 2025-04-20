@@ -35,11 +35,15 @@ export function BillingForm() {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Full Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="fullname"
+            className="block text-sm font-medium text-gray-700"
+          >
             Full Name
           </label>
           <input
             type="text"
+            id="fullname"
             name="fullName"
             value={formData.fullName}
             onChange={handleChange}
@@ -51,11 +55,15 @@ export function BillingForm() {
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
             Email
           </label>
           <input
             type="email"
+            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -67,11 +75,15 @@ export function BillingForm() {
 
         {/* Address */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="address"
+            className="block text-sm font-medium text-gray-700"
+          >
             Address
           </label>
           <input
             type="text"
+            id="address"
             name="address"
             value={formData.address}
             onChange={handleChange}
@@ -84,11 +96,15 @@ export function BillingForm() {
         {/* City & Country */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="city"
+              className="block text-sm font-medium text-gray-700"
+            >
               City
             </label>
             <input
               type="text"
+              id="city"
               name="city"
               value={formData.city}
               onChange={handleChange}
@@ -99,10 +115,14 @@ export function BillingForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="country"
+              className="block text-sm font-medium text-gray-700"
+            >
               Country
             </label>
             <select
+              id="country"
               name="country"
               value={formData.country}
               onChange={handleChange}
@@ -123,11 +143,15 @@ export function BillingForm() {
         <h3 className="mt-4 text-lg font-semibold">Payment Details</h3>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="cardNumber"
+            className="block text-sm font-medium text-gray-700"
+          >
             Card Number
           </label>
           <input
             type="text"
+            id="cardNumber"
             name="cardNumber"
             value={formData.cardNumber}
             onChange={handleChange}
@@ -139,11 +163,15 @@ export function BillingForm() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="expiration"
+              className="block text-sm font-medium text-gray-700"
+            >
               Expiration Date
             </label>
             <input
               type="text"
+              id="expiration"
               name="expiration"
               value={formData.expiration}
               onChange={handleChange}
@@ -154,11 +182,15 @@ export function BillingForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="cvv"
+              className="block text-sm font-medium text-gray-700"
+            >
               CVV
             </label>
             <input
               type="text"
+              id="cvv"
               name="cvv"
               value={formData.cvv}
               onChange={handleChange}

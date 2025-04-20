@@ -146,7 +146,7 @@ const ImageCarousel = ({ images }: { images: string[] }) => {
             className={`grid-item ${index === 0 ? 'main-image' : ''}`}
             onClick={() => setSelectedImage(image)}
           >
-            <img src={image} alt={`Listing image ${index + 1}`} />
+            <img src={image} alt={`Listing ${index + 1}`} />
           </div>
         ))}
       </div>

@@ -90,6 +90,47 @@ export type Payment = {
   customer: string;
 };
 
+// New component for the actions cell
+function ActionsCell({ row }: { row: Payment }) {
+  const [isCustomerInfoModalOpen, setIsCustomerInfoModalOpen] =
+    React.useState(false);
+
+  return (
+    <div>
+      <CustomerInfoModal
+        isOpen={isCustomerInfoModalOpen}
+        onClose={() => setIsCustomerInfoModalOpen(false)}
+        customer={{
+          name: row.customer,
+          email: row.email,
+          phone: row.phone,
+        }}
+      />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <MoreHorizontal />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem
+            onClick={() => navigator.clipboard.writeText(row.id)}
+          >
+            Copy payment ID
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => setIsCustomerInfoModalOpen(true)}>
+            View customer
+          </DropdownMenuItem>
+          <DropdownMenuItem>View payment details</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+}
+
 export const columns: ColumnDef<Payment>[] = [
   {
     id: 'select',
@@ -159,50 +200,7 @@ export const columns: ColumnDef<Payment>[] = [
   {
     id: 'actions',
     enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-      const [isCustomerInfoModalOpen, setIsCustomerInfoModalOpen] =
-        React.useState(false);
-
-      return (
-        <div>
-          <CustomerInfoModal
-            isOpen={isCustomerInfoModalOpen}
-            onClose={function (): void {
-              setIsCustomerInfoModalOpen(false);
-            }}
-            customer={{
-              name: payment.customer,
-              email: payment.email,
-              phone: payment.phone,
-            }}
-          />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(payment.id)}
-              >
-                Copy payment ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setIsCustomerInfoModalOpen(true)}
-              >
-                View customer
-              </DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-      );
-    },
+    cell: ({ row }) => <ActionsCell row={row.original} />,
   },
 ];
 
