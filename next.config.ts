@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true, // ignores Prettier for Vercel deployment
-  }
+  },
 };
 const withMDX = createMDX({
   // Add markdown plugins here, if needed

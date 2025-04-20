@@ -40,7 +40,8 @@ export const Features = () => {
             Made for fast-growing teams
           </h2>
           <p className="text-muted-foreground leading-snug font-medium">
-            Dibs has everything you need in one place. No more switching between multiple platforms to grow your business.
+            Dibs has everything you need in one place. No more switching between
+            multiple platforms to grow your business.
           </p>
         </div>
 
@@ -55,7 +56,7 @@ export const Features = () => {
                       src={item.image}
                       alt={`${item.title} interface`}
                       fill
-                      className="object-cover object-left-top ps-4 pt-2 rounded-tl-4xl"
+                      className="rounded-tl-4xl object-cover object-left-top ps-4 pt-2"
                     />
                     <div className="from-background absolute inset-0 z-10 bg-linear-to-t via-transparent to-transparent" />
                   </div>

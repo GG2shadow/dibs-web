@@ -15,7 +15,7 @@ const categories = [
       {
         question: 'How do I get started to try the product and services?',
         answer:
-          'Fill up the contact form below and we\'\ll get in touch within hours.',
+          "Fill up the contact form below and we'\ll get in touch within hours.",
       },
     ],
   },

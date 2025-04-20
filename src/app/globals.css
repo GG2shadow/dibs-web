@@ -165,8 +165,8 @@
     --ring: 240 10% 4%; /* #09090B */
     --cream: 0 100% 97%; /* #FFF7F3 */
     --dibs-red: 0 85% 50%; /* #F22C39 */
-    --dibs-red-hover: #D10000; /* #F22C39 */
-    --dibs-red-pressed: #A80000; /* #F22C39 */
+    --dibs-red-hover: #d10000; /* #F22C39 */
+    --dibs-red-pressed: #a80000; /* #F22C39 */
     --chart-1: 12 76% 61%; /* #E65C41 */
     --chart-2: 173 58% 39%; /* #2A9D8F */
     --chart-3: 197 37% 24%; /* #264653 */

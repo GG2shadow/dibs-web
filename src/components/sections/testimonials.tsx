@@ -31,7 +31,7 @@ const items = [
     image: '/testimonials/jonas-kotara.webp',
   },
   {
-    quote: 'Dibs\'\ dashboard is intuitive, powerful and all-in-one.',
+    quote: "Dibs'\ dashboard is intuitive, powerful and all-in-one.",
     author: 'Kevin Yam',
     role: 'Founder',
     company: 'Mercury Finance',
@@ -59,7 +59,7 @@ const items = [
     image: '/testimonials/jonas-kotara.webp',
   },
   {
-    quote: 'Dibs\'\ dashboard is intuitive, powerful and all-in-one.',
+    quote: "Dibs'\ dashboard is intuitive, powerful and all-in-one.",
     author: 'Kevin Yam',
     role: 'Founder',
     company: 'Mercury Finance',
@@ -90,7 +90,8 @@ export const Testimonials = ({
               Loved by premier service providers
             </h2>
             <p className="text-muted-foreground max-w-md leading-snug font-medium">
-              Dibs is trusted by Singapore's fastest-growing SMEs from various fields, ranging from F&B to fitness to real estate.
+              Dibs is trusted by Singapore's fastest-growing SMEs from various
+              fields, ranging from F&B to fitness to real estate.
             </p>
             <Button variant="outline" className="shadow-md">
               Read our Customer Stories <ArrowRight className="size-4" />
