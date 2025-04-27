@@ -1,171 +1,159 @@
-'use client';
+"use client"
 
-import * as React from 'react';
-
-import Image from 'next/image';
-
+import * as React from "react"
 import {
+  AudioWaveform,
+  BookOpen,
+  Bot,
+  Calendar,
   ChartNoAxesCombined,
-  Stamp,
-  HelpCircleIcon,
-  ScrollText,
-  ListIcon,
-  SearchIcon,
-  SettingsIcon,
+  Command,
+  Frame,
+  GalleryVerticalEnd,
+  House,
+  Map,
+  PieChart,
+  Settings2,
+  SquareTerminal,
+  StampIcon,
+  TvMinimal,
+  TvMinimalPlay,
   UsersIcon,
-  Construction,
-} from 'lucide-react';
+} from "lucide-react"
 
-import { NavMarketing } from './ui/nav-marketing';
-
-import { NavBookings } from '@/components/nav-bookings';
-import { NavMain } from '@/components/nav-main';
-import { NavSecondary } from '@/components/nav-secondary';
-import { NavStamps } from '@/components/nav-stamps';
-import { NavUser } from '@/components/nav-user';
+import { NavMain } from "@/components/nav-main"
+import { NavGeneral } from "./nav-general"
+import { NavUser } from "@/components/nav-user"
+import { NavTransactions } from "./nav-transactions"
+import { NavVirtualLounge } from "./nav-VirtualLounge"
+import { TeamSwitcher } from "./team-switcher"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar';
+  SidebarRail,
+} from "@/components/ui/sidebar"
 
+// This is sample data.
 const data = {
   user: {
-    name: 'Frites',
-    email: 'm@frites.com',
-    avatar: '/avatars/shadcn.jpg',
+    name: "Frites",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
   },
-  navMain: [
+  teams: [
     {
-      title: 'Analytics',
-      url: '#',
+      name: "Acme Inc",
+      logo: GalleryVerticalEnd,
+      plan: "Enterprise",
+    },
+    {
+      name: "Acme Corp.",
+      logo: AudioWaveform,
+      plan: "Startup",
+    },
+    {
+      name: "Evil Corp.",
+      logo: Command,
+      plan: "Free",
+    },
+  ],
+  navGeneral: [
+    {
+      name: "Analytics",
+      url: "#",
       icon: ChartNoAxesCombined,
     },
     {
-      title: 'Customers',
-      url: '#',
+      name: "Customers",
+      url: "#",
       icon: UsersIcon,
     },
   ],
-  navSecondary: [
+  navTransactions: [
     {
-      title: 'Settings',
-      url: '#',
-      icon: SettingsIcon,
-    },
-    {
-      title: 'Get Help',
-      url: '#',
-      icon: HelpCircleIcon,
-    },
-    {
-      title: 'Search',
-      url: '#',
-      icon: SearchIcon,
-    },
-  ],
-  stamps: [
-    {
-      name: 'Actions',
-      url: '#',
-      icon: Stamp,
-      parentName: 'Stamps',
-    },
-    {
-      name: 'Transactions',
-      url: '#',
-      icon: ScrollText,
-      parentName: 'Stamps',
+      title: "Transactions",
+      url: "#",
+      icon: StampIcon,
+      items: [
+        {
+          title: "Stamps",
+          url: "#",
+        },
+        {
+          title: "Bookings",
+          url: "#",
+        },
+      ],
     },
   ],
-  bookings: [
+  navVirtualLounge: [
     {
-      name: 'Transactions',
-      url: '#',
-      icon: ScrollText,
-      parentName: 'Bookings',
+      title: "Virtual Lounge",
+      url: "#",
+      icon: House,
+      items: [
+        {
+          title: "Customise",
+          url: "#",
+        },
+      ],
     },
   ],
-  marketing: [
+  navMain: [
     {
-      name: 'Coming soon...',
-      url: '#',
-      icon: Construction,
-      parentName: 'Marketing',
+      title: "Stamps",
+      url: "#",
+      icon: StampIcon,
+      items: [
+        {
+          title: "Actions",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Bookings",
+      url: "#",
+      icon: Calendar,
+      items: [
+        {
+          title: "Schedules",
+          url: "#",
+        },
+      ],
+    },
+    {
+      title: "Marketing",
+      url: "#",
+      icon: TvMinimalPlay,
+      items: [
+        {
+          title: "Nothing here yet...",
+          url: "#",
+        },
+      ],
     },
   ],
-};
-
-interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
 }
 
-export function AppSidebar({
-  activeTab,
-  setActiveTab,
-  ...props
-}: AppSidebarProps) {
+export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="offcanvas" {...props}>
+    <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
-            >
-              <a href="#">
-                <Image
-                  src="/dibs-logo-red.png"
-                  alt="logo"
-                  width={24}
-                  height={24}
-                  className="w-6 transition-all duration-300"
-                />
-                <h1 className="text-dibs-red font-dm-sans text-xl font-bold">
-                  Dibs
-                </h1>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain
-          items={data.navMain}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <NavStamps
-          items={data.stamps}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <NavBookings
-          items={data.bookings}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <NavMarketing
-          items={data.marketing}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-        <NavSecondary
-          items={data.navSecondary}
-          className="mt-auto"
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
+        <NavGeneral projects={data.navGeneral} />
+        <NavTransactions items={data.navTransactions} />
+        <NavVirtualLounge items={data.navVirtualLounge} />
+        <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
-  );
+  )
 }

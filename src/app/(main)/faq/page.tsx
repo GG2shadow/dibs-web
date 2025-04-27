@@ -2,8 +2,8 @@ import React from 'react';
 
 import { DashedLine } from '@/components/dashed-line';
 import CreamContainer from '@/components/layout/cream-container';
-import { FAQ } from '@/components/sections/faq';
-import { Testimonials } from '@/components/sections/testimonials';
+import { FAQ } from '@/components/ui/faq';
+import { Testimonials } from '@/components/ui/testimonials';
 
 const Page = () => {
   return (

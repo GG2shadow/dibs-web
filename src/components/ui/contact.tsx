@@ -2,23 +2,24 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { Facebook, Linkedin, Twitter } from 'lucide-react';
-
 import { DashedLine } from '../dashed-line';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { PiInstagramLogo, PiTiktokLogo } from 'react-icons/pi';
 
 const contactInfo = [
   {
     title: 'Corporate office',
     content: (
       <p className="text-muted-foreground mt-3">
-        1 Carlsberg Close
+        The Sandbox, Ngee Ann Polytechnic
         <br />
-        1260 Hillview, Australia
+        Block 56, #01-03
+        <br />
+        535 Clementi Rd, Singapore 599489
       </p>
     ),
   },
@@ -29,40 +30,37 @@ const contactInfo = [
         <div>
           <p className="">Careers</p>
           <Link
-            href="mailto:careers@streamline.com"
+            href="mailto:careers@usedibs.com"
             className="text-muted-foreground hover:text-foreground"
           >
-            careers@streamline.com
+            careers@usedibs.com
           </Link>
         </div>
         <div className="mt-1">
           <p className="">Press</p>
           <Link
-            href="mailto:press@streamline.com"
+            href="mailto:press@usedibs.com"
             className="text-muted-foreground hover:text-foreground"
           >
-            press@streamline.com
+            press@usedibs.com
           </Link>
         </div>
       </div>
     ),
   },
-  {
-    title: 'Follow us',
-    content: (
-      <div className="mt-3 flex gap-6 lg:gap-10">
-        <Link href="#" className="text-muted-foreground hover:text-foreground">
-          <Facebook className="size-5" />
-        </Link>
-        <Link href="#" className="text-muted-foreground hover:text-foreground">
-          <Twitter className="size-5" />
-        </Link>
-        <Link href="#" className="text-muted-foreground hover:text-foreground">
-          <Linkedin className="size-5" />
-        </Link>
-      </div>
-    ),
-  },
+  // {
+  //   title: 'Follow us',
+  //   content: (
+  //     <div className="mt-3 flex gap-6 lg:gap-10">
+  //       <Link href="#" className="text-muted-foreground hover:text-foreground">
+  //         <PiTiktokLogo className="size-5" />
+  //       </Link>
+  //       <Link href="#" className="text-muted-foreground hover:text-foreground">
+  //         <PiInstagramLogo className="size-5" />
+  //       </Link>
+  //     </div>
+  //   ),
+  // },
 ];
 
 export default function Contact() {
@@ -73,7 +71,7 @@ export default function Contact() {
           Contact us
         </h1>
         <p className="text-muted-foreground mt-4 text-center leading-snug font-medium lg:mx-auto">
-          Hopefully this form gets through our spam filters.
+          We strive to respond within 24 hours. If you have an urgent request, please WhatsApp +65 8716 9250.
         </p>
 
         <div className="mt-10 flex justify-between gap-8 max-sm:flex-col md:mt-14 lg:mt-20 lg:gap-12">
@@ -122,7 +120,7 @@ export default function Contact() {
             </div>
 
             <div className="flex justify-end">
-              <Button size="lg" type="submit" className="">
+              <Button size="lg" type="submit">
                 Submit
               </Button>
             </div>

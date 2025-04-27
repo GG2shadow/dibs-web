@@ -43,7 +43,7 @@ export default function Hero() {
         {/* Left side - Main content */}
         <div className="flex-1">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl md:whitespace-nowrap lg:text-4xl">
-            Your superapp to supercharge your business.
+            The superapp to supercharge your business.
           </h1>
 
           <p className="text-muted-foreground font-inter mt-5 text-2xl font-medium md:text-3xl lg:text-2xl">

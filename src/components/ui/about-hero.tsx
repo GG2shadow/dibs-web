@@ -2,8 +2,8 @@ import { DashedLine } from '@/components/dashed-line';
 
 const stats = [
   {
-    value: '$150M',
-    label: 'Raised',
+    value: '10+',
+    label: 'Partners',
   },
   {
     value: '20K',
@@ -29,22 +29,20 @@ export function AboutHero() {
           </h1>
 
           <p className="text-muted-foreground mt-5 font-sans text-2xl font-medium md:text-3xl lg:text-4xl">
-            Mainline is bringing modern software to life with AI magic.
+            Dibs is bringing tools critical to business growth to businesses of all sizes.
           </p>
 
           <p className="text-muted-foreground mt-8 hidden max-w-lg space-y-6 text-lg font-medium text-balance md:block lg:mt-12">
-            At Mainline, we are dedicated to transforming the way teams plan,
-            execute, and deliver projects. Our mission is to provide our
-            customers with an unbeatable edge over delays, inefficiencies, and
-            disorganisation through actionable insights and seamless
-            collaboration. We’ll stop at nothing to give you the tools you need
-            to get every project across the finish line.
+            At Dibs, we're on a mission to make the best software available to
+            businesses of all sizes. We're building a platform that connects
+            businesses with the best software, so that you can focus on what
+            matters most: growing your business.
             <br />
             <br />
-            We’re customer-obsessed — investing the time to understand every
+            We're customer-obsessed — investing the time to understand every
             aspect of your workflow so that we can help you operate better than
-            ever before. We’re all in this together because your success is our
-            success. In our history as a company, we’ve never lost a customer,
+            ever before. We're all in this together because your success is our
+            success. In our history as a company, we've never lost a customer,
             because when your projects succeed, so do we.
           </p>
         </div>

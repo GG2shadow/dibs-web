@@ -7,11 +7,14 @@ import { Button } from '@/components/ui/button';
 
 export function Footer() {
   const navigation = [
-    { name: 'Product', href: '/#feature-modern-teams' },
-    { name: 'About Us', href: '/about' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'FAQ', href: '/faq' },
-    { name: 'Contact', href: '/contact' },
+    // { name: 'Product', href: '/#feature-modern-teams' },
+    // { name: 'About Us', href: '/about' },
+    // { name: 'Pricing', href: '/pricing' },
+    // { name: 'FAQ', href: '/faq' },
+    // { name: 'Contact', href: '/contact' },
+    { name: 'Bookings', href: 'b/name' },
+    { name: 'Stamps', href: 's/admin' },
+    { name: 'Marketing', href: 'm/admin' },
   ];
 
   const social = [

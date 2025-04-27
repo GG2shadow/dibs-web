@@ -1,8 +1,8 @@
 import { DashedLine } from '@/components/dashed-line';
 import CreamContainer from '@/components/layout/cream-container';
-import About from '@/components/sections/about';
-import { AboutHero } from '@/components/sections/about-hero';
-import { Investors } from '@/components/sections/investors';
+import About from '@/components/ui/about';
+import { AboutHero } from '@/components/ui/about-hero';
+import { Investors } from '@/components/ui/investors';
 
 export default function AboutPage() {
   return (
