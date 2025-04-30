@@ -33,6 +33,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarGroup,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -171,9 +172,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavGeneral projects={data.navGeneral} />
-        <NavTransactions items={data.navTransactions} />
-        <NavVirtualLounge items={data.navVirtualLounge} />
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <NavGeneral projects={data.navGeneral} />
+          <NavTransactions items={data.navTransactions} />
+          <NavVirtualLounge items={data.navVirtualLounge} />
+        </SidebarGroup>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
