@@ -1,4 +1,11 @@
+'use client';
+
+import { useState } from 'react';
+
 import { AppSidebar } from '@/components/app-sidebar';
+import AnalyticsTabContent from '@/components/ui/Admin/AnalyticsContent';
+import { BookingsTransactionTabContent } from '@/components/ui/Admin/BookingsTransactionContent';
+import { StampsTransactionTabContent } from '@/components/ui/Admin/StampsTransactionContent';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,9 +22,24 @@ import {
 } from '@/components/ui/sidebar';
 
 export default function Page() {
+  const [activeTab, setActiveTab] = useState('Analytics');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'Analytics':
+        return <AnalyticsTabContent />;
+      case 'Transactions Stamps': // The format is "{parentName} {name}"
+        return <StampsTransactionTabContent />;
+      case 'Transactions Bookings': // The format is "{parentName} {name}"
+        return <BookingsTransactionTabContent />;
+      default:
+        return <AnalyticsTabContent />;
+    }
+  };
+
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar activeTab={activeTab} setActiveTab={setActiveTab} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
@@ -38,14 +60,7 @@ export default function Page() {
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-            <div className="bg-muted/50 aspect-video rounded-xl" />
-          </div>
-          <div className="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min" />
-        </div>
+        <div className="flex flex-1 flex-col gap-4 p-4">{renderContent()}</div>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -144,7 +144,16 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}
+
+export function AppSidebar({
+  activeTab,
+  setActiveTab,
+  ...props
+}: AppSidebarProps) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -173,14 +182,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-          <NavGeneral projects={data.navGeneral} />
-          <NavTransactions items={data.navTransactions} />
-          <NavVirtualLounge items={data.navVirtualLounge} />
+          <NavGeneral
+            projects={data.navGeneral}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <NavTransactions
+            items={data.navTransactions}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
+          <NavVirtualLounge
+            items={data.navVirtualLounge}
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+          />
         </SidebarGroup>
-        <NavMain items={data.navMain} />
+        <NavMain
+          items={data.navMain}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={data.user}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

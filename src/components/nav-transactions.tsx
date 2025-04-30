@@ -20,6 +20,8 @@ import {
 
 export function NavTransactions({
   items,
+  activeTab,
+  setActiveTab,
 }: {
   items: {
     title: string;
@@ -31,6 +33,8 @@ export function NavTransactions({
       url: string;
     }[];
   }[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }) {
   return (
     <SidebarMenu>
@@ -43,7 +47,13 @@ export function NavTransactions({
         >
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton tooltip={item.title}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                onClick={() => {
+                  setActiveTab(item.title);
+                }}
+                className={activeTab === item.title ? 'bg-gray-200' : ''}
+              >
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
@@ -53,7 +63,17 @@ export function NavTransactions({
               <SidebarMenuSub>
                 {item.items?.map((subItem) => (
                   <SidebarMenuSubItem key={subItem.title}>
-                    <SidebarMenuSubButton asChild>
+                    <SidebarMenuSubButton
+                      asChild
+                      onClick={(e) => {
+                        setActiveTab(`${item.title} ${subItem.title}`);
+                      }}
+                      className={
+                        activeTab === `${item.title} ${subItem.title}`
+                          ? 'bg-gray-200'
+                          : ''
+                      }
+                    >
                       <a href={subItem.url}>
                         <span>{subItem.title}</span>
                       </a>

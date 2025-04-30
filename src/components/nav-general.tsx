@@ -27,12 +27,16 @@ import {
 
 export function NavGeneral({
   projects,
+  activeTab,
+  setActiveTab,
 }: {
   projects: {
     name: string;
     url: string;
     icon: LucideIcon;
   }[];
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }) {
   const { isMobile } = useSidebar();
 
@@ -40,7 +44,11 @@ export function NavGeneral({
     <SidebarMenu>
       {projects.map((item) => (
         <SidebarMenuItem key={item.name}>
-          <SidebarMenuButton asChild>
+          <SidebarMenuButton
+            asChild
+            onClick={() => setActiveTab(item.name)}
+            className={activeTab === item.name ? 'bg-gray-200' : ''}
+          >
             <a href={item.url}>
               <item.icon />
               <span>{item.name}</span>

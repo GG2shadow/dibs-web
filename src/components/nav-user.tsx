@@ -28,12 +28,16 @@ import {
 
 export function NavUser({
   user,
+  activeTab,
+  setActiveTab,
 }: {
   user: {
     name: string;
     email: string;
     avatar: string;
   };
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 }) {
   const { isMobile } = useSidebar();
 
