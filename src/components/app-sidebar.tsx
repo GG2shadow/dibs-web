@@ -1,6 +1,7 @@
-"use client"
+'use client';
 
-import * as React from "react"
+import * as React from 'react';
+
 import {
   AudioWaveform,
   BookOpen,
@@ -19,124 +20,125 @@ import {
   TvMinimal,
   TvMinimalPlay,
   UsersIcon,
-} from "lucide-react"
+} from 'lucide-react';
 
-import { NavMain } from "@/components/nav-main"
-import { NavGeneral } from "./nav-general"
-import { NavUser } from "@/components/nav-user"
-import { NavTransactions } from "./nav-transactions"
-import { NavVirtualLounge } from "./nav-VirtualLounge"
-import { TeamSwitcher } from "./team-switcher"
+import { NavGeneral } from './nav-general';
+import { NavTransactions } from './nav-transactions';
+import { NavVirtualLounge } from './nav-VirtualLounge';
+import { TeamSwitcher } from './team-switcher';
+
+import { NavMain } from '@/components/nav-main';
+import { NavUser } from '@/components/nav-user';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from '@/components/ui/sidebar';
 
 // This is sample data.
 const data = {
   user: {
-    name: "Frites",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: 'Frites',
+    email: 'm@example.com',
+    avatar: '/avatars/shadcn.jpg',
   },
   teams: [
     {
-      name: "Acme Inc",
+      name: 'Acme Inc',
       logo: GalleryVerticalEnd,
-      plan: "Enterprise",
+      plan: 'Enterprise',
     },
     {
-      name: "Acme Corp.",
+      name: 'Acme Corp.',
       logo: AudioWaveform,
-      plan: "Startup",
+      plan: 'Startup',
     },
     {
-      name: "Evil Corp.",
+      name: 'Evil Corp.',
       logo: Command,
-      plan: "Free",
+      plan: 'Free',
     },
   ],
   navGeneral: [
     {
-      name: "Analytics",
-      url: "#",
+      name: 'Analytics',
+      url: '#',
       icon: ChartNoAxesCombined,
     },
     {
-      name: "Customers",
-      url: "#",
+      name: 'Customers',
+      url: '#',
       icon: UsersIcon,
     },
   ],
   navTransactions: [
     {
-      title: "Transactions",
-      url: "#",
+      title: 'Transactions',
+      url: '#',
       icon: StampIcon,
       items: [
         {
-          title: "Stamps",
-          url: "#",
+          title: 'Stamps',
+          url: '#',
         },
         {
-          title: "Bookings",
-          url: "#",
+          title: 'Bookings',
+          url: '#',
         },
       ],
     },
   ],
   navVirtualLounge: [
     {
-      title: "Virtual Lounge",
-      url: "#",
+      title: 'Virtual Lounge',
+      url: '#',
       icon: House,
       items: [
         {
-          title: "Customise",
-          url: "#",
+          title: 'Customise',
+          url: '#',
         },
       ],
     },
   ],
   navMain: [
     {
-      title: "Stamps",
-      url: "#",
+      title: 'Stamps',
+      url: '#',
       icon: StampIcon,
       items: [
         {
-          title: "Actions",
-          url: "#",
+          title: 'Actions',
+          url: '#',
         },
       ],
     },
     {
-      title: "Bookings",
-      url: "#",
+      title: 'Bookings',
+      url: '#',
       icon: Calendar,
       items: [
         {
-          title: "Schedules",
-          url: "#",
+          title: 'Schedules',
+          url: '#',
         },
       ],
     },
     {
-      title: "Marketing",
-      url: "#",
+      title: 'Marketing',
+      url: '#',
       icon: TvMinimalPlay,
       items: [
         {
-          title: "Nothing here yet...",
-          url: "#",
+          title: 'Nothing here yet...',
+          url: '#',
         },
       ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -155,5 +157,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

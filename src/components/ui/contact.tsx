@@ -2,13 +2,14 @@ import React from 'react';
 
 import Link from 'next/link';
 
+import { PiInstagramLogo, PiTiktokLogo } from 'react-icons/pi';
+
 import { DashedLine } from '../dashed-line';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { PiInstagramLogo, PiTiktokLogo } from 'react-icons/pi';
 
 const contactInfo = [
   {
@@ -71,7 +72,8 @@ export default function Contact() {
           Contact us
         </h1>
         <p className="text-muted-foreground mt-4 text-center leading-snug font-medium lg:mx-auto">
-          We strive to respond within 24 hours. If you have an urgent request, please WhatsApp +65 8716 9250.
+          We strive to respond within 24 hours. If you have an urgent request,
+          please WhatsApp +65 8716 9250.
         </p>
 
         <div className="mt-10 flex justify-between gap-8 max-sm:flex-col md:mt-14 lg:mt-20 lg:gap-12">

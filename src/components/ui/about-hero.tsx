@@ -29,7 +29,8 @@ export function AboutHero() {
           </h1>
 
           <p className="text-muted-foreground mt-5 font-sans text-2xl font-medium md:text-3xl lg:text-4xl">
-            Dibs is bringing tools critical to business growth to businesses of all sizes.
+            Dibs is bringing tools critical to business growth to businesses of
+            all sizes.
           </p>
 
           <p className="text-muted-foreground mt-8 hidden max-w-lg space-y-6 text-lg font-medium text-balance md:block lg:mt-12">
