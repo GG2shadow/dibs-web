@@ -34,6 +34,9 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from '@/components/ui/sidebar';
 
@@ -143,6 +146,27 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <a href="#">
+                <img
+                  src="/dibs-logo-red.png"
+                  alt="logo"
+                  className="w-6 transition-all duration-300"
+                />
+                <h1 className="text-dibs-red font-dm-sans text-xl font-bold">
+                  Dibs
+                </h1>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarHeader>
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
