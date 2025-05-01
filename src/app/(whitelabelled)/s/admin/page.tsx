@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { AdminStampsForm } from '@/components/ui/Stamps/AdminStampsForm';
-import { BusinessProfile } from '@/components/ui/Stamps/BusinessProfile';
+import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { supabase } from '@/lib/supabaseClient';
 
 const AdminPage = () => {

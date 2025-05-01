@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
-import { BusinessProfile } from '@/components/ui/Stamps/BusinessProfile';
+import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { EnterPhoneNumberForm } from '@/components/ui/Stamps/EnterPhoneNumberForm';
 
 const CollectStampsPage = () => {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { BusinessProfile } from '@/components/ui/Stamps/BusinessProfile';
+import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { EnterPhoneNumberForm } from '@/components/ui/Stamps/EnterPhoneNumberForm';
 import { VerifyOTPForm } from '@/components/ui/Stamps/VerifyOTPForm';
 

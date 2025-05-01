@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BusinessProfile } from '@/components/ui/Stamps/BusinessProfile';
+import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { StampCard } from '@/components/ui/Stamps/StampCard';
 
 const StampCardPage: React.FC = () => {

@@ -20,6 +20,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { VirtualLoungeCustomise } from '@/components/ui/Admin/SideBarContent/VirtualLoungeCustomise';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('Analytics');
@@ -28,6 +29,8 @@ export default function Page() {
     switch (activeTab) {
       case 'Analytics':
         return <AnalyticsTabContent />;
+      case 'Virtual Lounge Customise':
+        return <VirtualLoungeCustomise />;
       case 'Transactions Stamps': // The format is "{parentName} {name}"
         return <StampsTransactionTabContent />;
       case 'Transactions Bookings': // The format is "{parentName} {name}"

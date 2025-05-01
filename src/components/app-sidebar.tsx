@@ -4,20 +4,12 @@ import * as React from 'react';
 
 import {
   AudioWaveform,
-  BookOpen,
-  Bot,
   Calendar,
   ChartNoAxesCombined,
   Command,
-  Frame,
   GalleryVerticalEnd,
   House,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
   StampIcon,
-  TvMinimal,
   TvMinimalPlay,
   UsersIcon,
 } from 'lucide-react';
@@ -50,19 +42,19 @@ const data = {
   },
   teams: [
     {
-      name: 'Acme Inc',
+      name: 'Jurong Branch',
       logo: GalleryVerticalEnd,
-      plan: 'Enterprise',
+      address: 'Jurong East Street 82 #01-02 Singapore 609603',
     },
     {
-      name: 'Acme Corp.',
+      name: 'Woodlands Branch',
       logo: AudioWaveform,
-      plan: 'Startup',
+      address: 'Woodlands Street 123 #02-13 Singapore 730123',
     },
     {
-      name: 'Evil Corp.',
+      name: 'Changi Branch',
       logo: Command,
-      plan: 'Free',
+      address: 'Changi Street 456 #05-02 Singapore 456789',
     },
   ],
   navGeneral: [
