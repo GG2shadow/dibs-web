@@ -1,5 +1,5 @@
-import { FaPhoneAlt } from "react-icons/fa";
-import { IoMdMail } from "react-icons/io";
+import { FaPhoneAlt } from 'react-icons/fa';
+import { IoMdMail } from 'react-icons/io';
 
 interface OurBusinessProfileProps {
   brand?: string;
@@ -50,7 +50,7 @@ const OurBusinessProfile = ({
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+                  className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
                 >
                   {social.icon}
                   <span className="text-sm">{social.handle}</span>
@@ -61,14 +61,14 @@ const OurBusinessProfile = ({
           <div className="mt-4 flex items-center gap-6">
             <a
               href={`tel:${phone}`}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
             >
               <FaPhoneAlt className="h-4 w-4" />
               <span className="text-sm">{phone}</span>
             </a>
             <a
               href={`mailto:${email}`}
-              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-2"
+              className="text-muted-foreground hover:text-foreground flex items-center gap-2 transition-colors"
             >
               <IoMdMail className="h-4 w-4" />
               <span className="text-sm">{email}</span>

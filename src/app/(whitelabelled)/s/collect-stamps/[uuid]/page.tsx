@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import { useParams, useRouter } from 'next/navigation';
 
-import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
+import { OurBusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { EnterPhoneNumberForm } from '@/components/ui/Stamps/EnterPhoneNumberForm';
 
 const CollectStampsPage = () => {
@@ -62,9 +62,9 @@ const CollectStampsPage = () => {
 
   return (
     <div className="container mx-auto">
-      <BusinessProfile
-        heading="Frites"
-        subheading="Beefy goodness & crispy potato perfection."
+      <OurBusinessProfile
+        brand="Frites"
+        bio="Beefy goodness & crispy potato perfection."
         logo={{
           url: 'https://www.shadcnblocks.com',
           src: 'https://shadcnblocks.com/images/block/block-1.svg',

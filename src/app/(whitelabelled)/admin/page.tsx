@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { AppSidebar } from '@/components/app-sidebar';
 import AnalyticsTabContent from '@/components/ui/Admin/AnalyticsContent';
 import { BookingsTransactionTabContent } from '@/components/ui/Admin/BookingsTransactionContent';
+import { VirtualLoungeCustomise } from '@/components/ui/Admin/SideBarContent/VirtualLoungeCustomise';
 import { StampsTransactionTabContent } from '@/components/ui/Admin/StampsTransactionContent';
 import {
   Breadcrumb,
@@ -20,7 +21,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { VirtualLoungeCustomise } from '@/components/ui/Admin/SideBarContent/VirtualLoungeCustomise';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('Analytics');

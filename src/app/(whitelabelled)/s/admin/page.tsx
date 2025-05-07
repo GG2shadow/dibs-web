@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import { OurBusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { AdminStampsForm } from '@/components/ui/Stamps/AdminStampsForm';
-import { BusinessProfile } from '@/components/ui/OurComponents/OurBusinessProfile';
 import { supabase } from '@/lib/supabaseClient';
 
 const AdminPage = () => {
@@ -56,9 +56,9 @@ const AdminPage = () => {
 
   return (
     <div className="container mx-auto">
-      <BusinessProfile
-        heading="Frites"
-        subheading="Beefy goodness & crispy potato perfection."
+      <OurBusinessProfile
+        brand="Frites"
+        bio="Beefy goodness & crispy potato perfection."
         logo={{
           url: 'https://www.shadcnblocks.com',
           src: 'https://shadcnblocks.com/images/block/block-1.svg',
