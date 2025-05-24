@@ -14,13 +14,13 @@ import {
   UsersIcon,
 } from 'lucide-react';
 
-import { NavGeneral } from './nav-general';
-import { NavTransactions } from './nav-transactions';
-import { NavVirtualLounge } from './nav-VirtualLounge';
-import { TeamSwitcher } from './team-switcher';
+import { NavGeneral } from './NavGeneral';
+import { NavTransactions } from './NavTransactions';
+import { NavVirtualConcierge } from './NavVirtualConcierge';
+import { TeamSwitcher } from '../../../team-switcher';
 
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+import { NavModules } from '@/components/ui/Admin/SideBar/NavModules';
+import { NavBusiness } from '@/components/ui/Admin/SideBar/NavBusiness';
 import {
   Sidebar,
   SidebarContent,
@@ -86,9 +86,9 @@ const data = {
       ],
     },
   ],
-  navVirtualLounge: [
+  navVirtualConcierge: [
     {
-      title: 'Virtual Lounge',
+      title: 'Virtual Concierge',
       url: '#',
       icon: House,
       items: [
@@ -117,18 +117,15 @@ const data = {
       icon: Calendar,
       items: [
         {
+          title: 'Listings',
+          url: '#',
+        },
+        {
           title: 'Schedules',
           url: '#',
         },
-      ],
-    },
-    {
-      title: 'Marketing',
-      url: '#',
-      icon: TvMinimalPlay,
-      items: [
         {
-          title: 'Nothing here yet...',
+          title: 'Calendar',
           url: '#',
         },
       ],
@@ -153,7 +150,7 @@ export function AppSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-1.5" 
             >
               <a href="#">
                 <img
@@ -184,20 +181,20 @@ export function AppSidebar({
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
-          <NavVirtualLounge
-            items={data.navVirtualLounge}
+          <NavVirtualConcierge
+            items={data.navVirtualConcierge}
             activeTab={activeTab}
             setActiveTab={setActiveTab}
           />
         </SidebarGroup>
-        <NavMain
+        <NavModules
           items={data.navMain}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
+        <NavBusiness
           user={data.user}
           activeTab={activeTab}
           setActiveTab={setActiveTab}

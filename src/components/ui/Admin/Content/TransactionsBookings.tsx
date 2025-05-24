@@ -16,7 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
 
-import CustomerInfoModal from '@/components/ui/Admin/modals/CustomerInfoModal';
+import CustomerInfoModal from '@/components/ui/Admin/Modals/CustomerInfoModal';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -171,7 +171,15 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'reservation',
-    header: () => <div className="text-left">Reservation</div>,
+    header: ({ column }) => (
+      <div
+        className="flex cursor-pointer items-center text-left"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Reservation
+        <ArrowUpDown className="ml-1 h-4 w-4" />
+      </div>
+    ),
     cell: ({ row }) => <div>{row.getValue('reservation')}</div>,
   },
   {
@@ -181,15 +189,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: 'email',
-    header: ({ column }) => (
-      <div
-        className="flex cursor-pointer items-center text-left"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        Email
-        <ArrowUpDown className="ml-1 h-4 w-4" />
-      </div>
-    ),
+    header: () => <div className="text-left">Email</div>,
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
@@ -204,7 +204,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function StampsTransactionTabContent() {
+export function TransactionsBookings() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -233,10 +233,12 @@ export function StampsTransactionTabContent() {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full pl-1">
+      <h1 className="text-xl font-semibold">Booking Transactions</h1>
+      <p className="text-sm text-muted-foreground">This is a list of all your booking transactions.</p>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search..."
+          placeholder="Search bookings..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('email')?.setFilterValue(event.target.value)

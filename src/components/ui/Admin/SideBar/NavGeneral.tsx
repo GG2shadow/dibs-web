@@ -54,7 +54,7 @@ export function NavGeneral({
               <span>{item.name}</span>
             </a>
           </SidebarMenuButton>
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuAction showOnHover>
                 <MoreHorizontal />
@@ -80,7 +80,7 @@ export function NavGeneral({
                 <span>Delete Project</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </SidebarMenuItem>
       ))}
     </SidebarMenu>

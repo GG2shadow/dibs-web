@@ -16,7 +16,7 @@ import {
 } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from 'lucide-react';
 
-import CustomerInfoModal from '@/components/ui/Admin/modals/CustomerInfoModal';
+import CustomerInfoModal from '@/components/ui/Admin/Modals/CustomerInfoModal';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -41,52 +41,40 @@ import {
 const data: Payment[] = [
   {
     id: 'm5gr84i9',
-    status: 'upcoming',
     email: 'ken99@yahoo.com',
     phone: '123-456-7890',
-    reservation: '2023-10-01 14:30',
     customer: 'Ken Adams',
   },
   {
     id: '3u1reuv4',
-    status: 'upcoming',
     email: 'Abe45@gmail.com',
     phone: '234-567-8901',
-    reservation: '2023-10-02 15:00',
     customer: 'Abe Lincoln',
   },
   {
     id: 'derv1ws0',
-    status: 'cancelled',
     email: 'Monserrat44@gmail.com',
     phone: '345-678-9012',
-    reservation: '2023-10-03 16:00',
     customer: 'Monserrat Ruiz',
   },
   {
     id: '5kma53ae',
-    status: 'upcoming',
     email: 'Silas22@gmail.com',
     phone: '456-789-0123',
-    reservation: '2023-10-04 17:00',
     customer: 'Silas Brown',
   },
   {
     id: 'bhqecj4p',
-    status: 'completed',
     email: 'carmella@hotmail.com',
     phone: '567-890-1234',
-    reservation: '2023-10-05 18:00',
     customer: 'Carmella White',
   },
 ];
 
 export type Payment = {
   id: string;
-  status: 'pending' | 'cancelled' | 'upcoming' | 'completed';
   email: string;
   phone: string;
-  reservation: string;
   customer: string;
 };
 
@@ -161,35 +149,21 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: () => <div className="text-left">Status</div>,
-    cell: ({ row }) => (
-      <div className="text-status-color capitalize">
-        {row.getValue('status')}
-      </div>
-    ),
-  },
-  {
-    accessorKey: 'reservation',
-    header: () => <div className="text-left">Reservation</div>,
-    cell: ({ row }) => <div>{row.getValue('reservation')}</div>,
-  },
-  {
     accessorKey: 'customer',
-    header: () => <div className="text-left">Customer</div>,
-    cell: ({ row }) => <div>{row.getValue('customer')}</div>,
-  },
-  {
-    accessorKey: 'email',
     header: ({ column }) => (
       <div
         className="flex cursor-pointer items-center text-left"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
-        Email
+        Customer
         <ArrowUpDown className="ml-1 h-4 w-4" />
       </div>
     ),
+    cell: ({ row }) => <div>{row.getValue('customer')}</div>,
+  },
+  {
+    accessorKey: 'email',
+    header: () => <div className="text-left">Email</div>,
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
@@ -204,7 +178,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-export function BookingsTransactionTabContent() {
+export function Customers() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -233,10 +207,12 @@ export function BookingsTransactionTabContent() {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full pl-1">
+      <h1 className="text-xl font-semibold">Customers</h1>
+      <p className="text-sm text-muted-foreground">This is a list of all your customers.</p>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search..."
+          placeholder="Search customers..."
           value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('email')?.setFilterValue(event.target.value)

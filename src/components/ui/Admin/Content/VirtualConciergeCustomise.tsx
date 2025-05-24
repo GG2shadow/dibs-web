@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 
-export function VirtualLoungeCustomise() {
+export function VirtualConciergeCustomise() {
   const [formData, setFormData] = useState({
     name: '',
     bio: '',
@@ -34,9 +34,11 @@ export function VirtualLoungeCustomise() {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4 pl-1">
-        <form className="w-full space-y-6">
+    <div className="w-full pl-1">
+      <h1 className="text-xl font-semibold">Virtual Concierge</h1>
+      <p className="text-sm text-muted-foreground">This is where you can customise your virtual concierge.</p>
+      <div className="flex items-center py-4">
+        <form className="w-1/2 space-y-6">
           <div className="space-y-4">
             <h2 className="text-lg font-semibold">Business information</h2>
             <div className="space-y-2">

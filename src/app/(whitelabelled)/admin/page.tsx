@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 
-import { AppSidebar } from '@/components/app-sidebar';
-import AnalyticsTabContent from '@/components/ui/Admin/AnalyticsContent';
-import { BookingsTransactionTabContent } from '@/components/ui/Admin/BookingsTransactionContent';
-import { VirtualLoungeCustomise } from '@/components/ui/Admin/SideBarContent/VirtualLoungeCustomise';
-import { StampsTransactionTabContent } from '@/components/ui/Admin/StampsTransactionContent';
+import { AppSidebar } from '@/components/ui/Admin/SideBar/AdminSideBar';
+import { TransactionsBookings } from '@/components/ui/Admin/Content/TransactionsBookings';
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -21,6 +19,14 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
+import { ComingSoon } from '@/components/ui/Admin/Content/ComingSoon';
+import { Customers } from '@/components/ui/Admin/Content/Customers';
+import { TransactionsStamps } from '@/components/ui/Admin/Content/TransactionsStamps';
+import { VirtualConciergeCustomise } from '@/components/ui/Admin/Content/VirtualConciergeCustomise';
+import { StampsActions } from '@/components/ui/Admin/Content/StampsActions';
+import { BookingsCalendar } from '@/components/ui/Admin/Content/BookingsCalendar';
+import { BookingsSchedules } from '@/components/ui/Admin/Content/BookingsSchedules';
+import { BookingsListings } from '@/components/ui/Admin/Content/BookingsListings';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('Analytics');
@@ -28,15 +34,25 @@ export default function Page() {
   const renderContent = () => {
     switch (activeTab) {
       case 'Analytics':
-        return <AnalyticsTabContent />;
-      case 'Virtual Lounge Customise':
-        return <VirtualLoungeCustomise />;
-      case 'Transactions Stamps': // The format is "{parentName} {name}"
-        return <StampsTransactionTabContent />;
+        return <ComingSoon />;
+      case 'Customers':
+        return <Customers />;
+      case 'Transactions Stamps':
+        return <TransactionsStamps />;
       case 'Transactions Bookings': // The format is "{parentName} {name}"
-        return <BookingsTransactionTabContent />;
+        return <TransactionsBookings />;
+      case 'Virtual Concierge Customise':
+        return <VirtualConciergeCustomise />;
+      case 'Stamps Actions':
+        return <StampsActions />;
+      case 'Bookings Listings':
+        return <BookingsListings />;
+      case 'Bookings Schedules':
+        return <BookingsSchedules />;
+      case 'Bookings Calendar':
+        return <BookingsCalendar />;
       default:
-        return <AnalyticsTabContent />;
+        return <ComingSoon />;
     }
   };
 
@@ -52,13 +68,17 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
-                    Building Your Application
+                    {activeTab.split(' ')[0]}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                </BreadcrumbItem>
+                {activeTab.includes(' ') && (
+                  <>
+                    <BreadcrumbSeparator className="hidden md:block" />
+                    <BreadcrumbItem>
+                      <BreadcrumbPage>{activeTab.split(' ')[1]}</BreadcrumbPage>
+                    </BreadcrumbItem>
+                  </>
+                )}
               </BreadcrumbList>
             </Breadcrumb>
           </div>

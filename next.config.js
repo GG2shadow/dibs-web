@@ -11,6 +11,9 @@ const nextConfig = {
     removeConsole: true,
   },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  images: {
+    domains: ['images.unsplash.com'],
+  },
 };
 
 module.exports = withMDX(nextConfig);

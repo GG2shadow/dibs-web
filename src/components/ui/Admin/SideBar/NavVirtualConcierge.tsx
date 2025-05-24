@@ -18,7 +18,7 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 
-export function NavVirtualLounge({
+export function NavVirtualConcierge({
   items,
   activeTab,
   setActiveTab,
