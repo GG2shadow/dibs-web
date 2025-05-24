@@ -49,8 +49,6 @@ export type Listing = {
   shortDescription: string;
   longDescription: string;
   price: string;
-  capacity: string;
-  location: string;
   isActive: boolean;
   requiresDeposit: boolean;
   imageUrl: string;
@@ -65,8 +63,6 @@ const data: Listing[] = [
     shortDescription: 'Stunning ocean view with private pool',
     longDescription: 'Experience luxury living in this stunning beach villa with private pool and ocean views.',
     price: '500',
-    capacity: '6',
-    location: 'Miami Beach',
     isActive: true,
     requiresDeposit: true,
     imageUrl: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=400&h=300&fit=crop',
@@ -79,8 +75,6 @@ const data: Listing[] = [
     shortDescription: 'Cozy retreat with fireplace',
     longDescription: 'Escape to this cozy mountain cabin featuring a warm fireplace and stunning views.',
     price: '300',
-    capacity: '4',
-    location: 'Aspen',
     isActive: true,
     requiresDeposit: true,
     imageUrl: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=400&h=300&fit=crop',
@@ -93,8 +87,6 @@ const data: Listing[] = [
     shortDescription: 'Modern living in downtown',
     longDescription: 'Contemporary apartment in the heart of the city with modern amenities.',
     price: '200',
-    capacity: '2',
-    location: 'New York',
     isActive: false,
     requiresDeposit: false,
     imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop',
@@ -107,8 +99,6 @@ const data: Listing[] = [
     shortDescription: 'Peaceful garden setting',
     longDescription: 'Charming cottage surrounded by beautiful gardens and nature.',
     price: '250',
-    capacity: '3',
-    location: 'Portland',
     isActive: true,
     requiresDeposit: true,
     imageUrl: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop',
@@ -396,7 +386,7 @@ export function BookingsListings() {
       <BookingsListingsEditModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        listing={selectedListing}
+        listing={selectedListing!}
         onSave={handleSaveListing}
       />
       

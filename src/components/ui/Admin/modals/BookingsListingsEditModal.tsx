@@ -13,8 +13,6 @@ interface BookingListing {
   shortDescription: string;
   longDescription: string;
   price: string;
-  capacity: string;
-  location: string;
   isActive: boolean;
   requiresDeposit: boolean;
   images: File[];
