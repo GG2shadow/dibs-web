@@ -5,4 +5,5 @@ export type Business = {
   created_at: string;
   user_id: string;
   slug: string | null;
+  bio: string | null;
 };

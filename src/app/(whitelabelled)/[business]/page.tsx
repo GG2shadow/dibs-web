@@ -19,7 +19,7 @@ import { Listing } from '@/types/listing';
 export default function BookingLandingPage() {
   const { business: businessSlug } = useParams() as { business: string };
   const [isValid, setIsValid] = useState<boolean | null>(null); // null = loading
-  const [businessData, setBusinessData] = useState<Business | null>(null);
+  const [business, setBusiness] = useState<Business | null>(null);
   const [listings, setListings] = useState<Listing[]>([]);
 
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function BookingLandingPage() {
         return;
       }
 
-      setBusinessData(businessData); // ✅ store business data in state
+      setBusiness(businessData); // ✅ store business data in state
 
       const { data: listingData, error: listingError } = await supabase
         .from('listing')
@@ -129,8 +129,8 @@ export default function BookingLandingPage() {
     <div className="min-h-screen w-screen pt-16">
       <OurAnnouncementBanner></OurAnnouncementBanner>
       <OurBusinessProfile
-        brand="Kayden's Escape Room"
-        bio="Singapore's first escape room that does not actually exist."
+        brand={business?.name}
+        bio={business?.bio ?? ''}
         logo={{
           url: 'https://www.shadcnblocks.com',
           src: 'https://shadcnblocks.com/images/block/block-1.svg',
@@ -152,7 +152,7 @@ export default function BookingLandingPage() {
           // ... more social links
         ]}
       />
-      <OurProductsList listings={listings} business={businessData} />
+      <OurProductsList listings={listings} business={business} />
       <OurStampCardsList cards={stampCards} />
       <OurWatermarkFooter />
     </div>
