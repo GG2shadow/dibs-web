@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { Business } from '@/types/business';
+
 interface Product {
   id: string;
   name: string;
@@ -13,7 +15,7 @@ interface Product {
 
 interface OurProductsListProps {
   products: Product[];
-  businessId: string;
+  business: Business | null;
 }
 
 const OurProductsList = ({ products, businessId }: OurProductsListProps) => {

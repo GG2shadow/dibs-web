@@ -13,10 +13,12 @@ import { OurProductsList } from '@/components/ui/OurComponents/OurProductsList';
 import { OurStampCardsList } from '@/components/ui/OurComponents/OurStampCardsList';
 import OurWatermarkFooter from '@/components/ui/OurComponents/OurWatermarkFooter';
 import { supabase } from '@/lib/supabaseClient';
+import { Business } from '@/types/business';
 
 export default function BookingLandingPage() {
-  const { business: businessId } = useParams() as { business: string };
+  const { business: businessSlug } = useParams() as { business: string };
   const [isValid, setIsValid] = useState<boolean | null>(null); // null = loading
+  const [businessData, setBusinessData] = useState<Business | null>(null);
   const [products, setProducts] = useState<
     {
       id: string;
@@ -31,38 +33,47 @@ export default function BookingLandingPage() {
 
   useEffect(() => {
     const fetchListings = async () => {
-      const { data, error } = await supabase
-        .from('listing')
+      const { data: businessData, error: businessError } = await supabase
+        .from('business')
         .select('*')
-        .eq('business_id', businessId);
+        .eq('slug', businessSlug)
+        .single();
 
-      if (error || !data || data.length === 0) {
-        console.warn(
-          'Invalid business ID or no listings found. Redirecting...',
-        );
+      if (businessError || !businessData) {
+        console.warn('Invalid business ID. Redirecting...');
         router.push('/not-found'); // or another fallback page
         return;
       }
 
+      setBusinessData(businessData); // ✅ store business data in state
+
+      const { data: listingData, error: listingError } = await supabase
+        .from('listing')
+        .select('*')
+        .eq('business_id', businessData.id);
+
+      console.warn('Error when fetching listings: ', listingError);
+
       // Map to match your component format
-      const formatted = data.map((item) => ({
-        id: item.id,
-        name: item.title,
-        description: item.description,
-        price: {
-          amount: `$${item.price}`,
-          suffix: 'per person', // or adapt dynamically
-        },
-        image: item.image,
-      }));
+      const formatted =
+        listingData?.map((item) => ({
+          id: item.id,
+          name: item.title,
+          description: item.description,
+          price: {
+            amount: `$${item.price}`,
+            suffix: 'per person', // or adapt dynamically
+          },
+          image: item.image,
+        })) ?? [];
       setProducts(formatted);
       setIsValid(true);
     };
 
-    if (businessId) {
+    if (businessSlug) {
       fetchListings();
     }
-  }, [businessId, router]);
+  }, [businessSlug, router]);
 
   // 👉 Prevent rendering until check is done
   if (isValid === null) return null; // Or show a loader
@@ -160,7 +171,7 @@ export default function BookingLandingPage() {
           // ... more social links
         ]}
       />
-      <OurProductsList products={products} businessId={businessId} />
+      <OurProductsList products={products} business={businessData} />
       <OurStampCardsList cards={stampCards} />
       <OurWatermarkFooter />
     </div>
