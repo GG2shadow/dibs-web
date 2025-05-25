@@ -23,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../tabs';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/supabaseClient';
 
 interface Signup2Props {
   signupText?: string;
@@ -132,29 +133,17 @@ const AdminStampsForm = ({
       setError(null);
 
       try {
-        const response = await fetch(
-          `https://xgidujoanslsfwwtqidj.supabase.co/rest/v1/redemption_rule?campaign_id=eq.${campaignId}&select=*`,
-          {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhnaWR1am9hbnNsc2Z3d3RxaWRqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzc4NTM4MywiZXhwIjoyMDUzMzYxMzgzfQ.RN_VqNSkN3gHk4JngkIaClgn0tmM-aDCxGtWaELLXDM`,
-              apikey:
-                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhnaWR1am9hbnNsc2Z3d3RxaWRqIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNzc4NTM4MywiZXhwIjoyMDUzMzYxMzgzfQ.RN_VqNSkN3gHk4JngkIaClgn0tmM-aDCxGtWaELLXDM',
-            },
-          },
-        );
+        const { data, error } = await supabase
+          .from('redemption_rule')
+          .select('*')
+          .eq('campaign_id', campaignId);
 
-        const result = await response.json();
-        if (!response.ok) {
-          if (result && result.error) {
-            throw new Error(result.error);
-          } else {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+        if (error) {
+          throw new Error(error.message);
         }
+
         setRedemptionRules(
-          (result as RawRedemptionRule[]).map((item) => ({
+          (data as RawRedemptionRule[]).map((item) => ({
             id: item.id,
             name: item.reward_title,
           })),

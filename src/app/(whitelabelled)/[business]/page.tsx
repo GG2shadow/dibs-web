@@ -14,20 +14,13 @@ import { OurStampCardsList } from '@/components/ui/OurComponents/OurStampCardsLi
 import OurWatermarkFooter from '@/components/ui/OurComponents/OurWatermarkFooter';
 import { supabase } from '@/lib/supabaseClient';
 import { Business } from '@/types/business';
+import { Listing } from '@/types/listing';
 
 export default function BookingLandingPage() {
   const { business: businessSlug } = useParams() as { business: string };
   const [isValid, setIsValid] = useState<boolean | null>(null); // null = loading
   const [businessData, setBusinessData] = useState<Business | null>(null);
-  const [products, setProducts] = useState<
-    {
-      id: string;
-      name: string;
-      description: string;
-      price: { amount: string; suffix: string };
-      image: string;
-    }[]
-  >([]);
+  const [listings, setListings] = useState<Listing[]>([]);
 
   const router = useRouter();
 
@@ -54,19 +47,7 @@ export default function BookingLandingPage() {
 
       console.warn('Error when fetching listings: ', listingError);
 
-      // Map to match your component format
-      const formatted =
-        listingData?.map((item) => ({
-          id: item.id,
-          name: item.title,
-          description: item.description,
-          price: {
-            amount: `$${item.price}`,
-            suffix: 'per person', // or adapt dynamically
-          },
-          image: item.image,
-        })) ?? [];
-      setProducts(formatted);
+      setListings(listingData ?? []);
       setIsValid(true);
     };
 
@@ -171,7 +152,7 @@ export default function BookingLandingPage() {
           // ... more social links
         ]}
       />
-      <OurProductsList products={products} business={businessData} />
+      <OurProductsList listings={listings} business={businessData} />
       <OurStampCardsList cards={stampCards} />
       <OurWatermarkFooter />
     </div>
