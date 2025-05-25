@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { IoLogoTiktok } from 'react-icons/io5';
 import { PiInstagramLogoFill } from 'react-icons/pi';
@@ -16,6 +16,7 @@ import { supabase } from '@/lib/supabaseClient';
 
 export default function BookingLandingPage() {
   const { business: businessId } = useParams() as { business: string };
+  const [isValid, setIsValid] = useState<boolean | null>(null); // null = loading
   const [products, setProducts] = useState<
     {
       id: string;
@@ -26,6 +27,8 @@ export default function BookingLandingPage() {
     }[]
   >([]);
 
+  const router = useRouter();
+
   useEffect(() => {
     const fetchListings = async () => {
       const { data, error } = await supabase
@@ -33,26 +36,36 @@ export default function BookingLandingPage() {
         .select('*')
         .eq('business_id', businessId);
 
-      if (error) {
-        console.error('Failed to fetch listings:', error);
-      } else {
-        // Map to match your component format
-        const formatted = data.map((item) => ({
-          id: item.id,
-          name: item.title,
-          description: item.description,
-          price: {
-            amount: `$${item.price}`,
-            suffix: 'per person', // or adapt dynamically
-          },
-          image: item.image,
-        }));
-        setProducts(formatted);
+      if (error || !data || data.length === 0) {
+        console.warn(
+          'Invalid business ID or no listings found. Redirecting...',
+        );
+        router.push('/not-found'); // or another fallback page
+        return;
       }
+
+      // Map to match your component format
+      const formatted = data.map((item) => ({
+        id: item.id,
+        name: item.title,
+        description: item.description,
+        price: {
+          amount: `$${item.price}`,
+          suffix: 'per person', // or adapt dynamically
+        },
+        image: item.image,
+      }));
+      setProducts(formatted);
+      setIsValid(true);
     };
 
-    fetchListings();
-  }, [businessId]);
+    if (businessId) {
+      fetchListings();
+    }
+  }, [businessId, router]);
+
+  // 👉 Prevent rendering until check is done
+  if (isValid === null) return null; // Or show a loader
 
   // const products = [
   //   {

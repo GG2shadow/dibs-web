@@ -2,9 +2,16 @@
 
 import { useState } from 'react';
 
-import { AppSidebar } from '@/components/ui/Admin/SideBar/AdminSideBar';
+import { BookingsCalendar } from '@/components/ui/Admin/Content/BookingsCalendar';
+import { BookingsListings } from '@/components/ui/Admin/Content/BookingsListings';
+import { BookingsSchedules } from '@/components/ui/Admin/Content/BookingsSchedules';
+import { ComingSoon } from '@/components/ui/Admin/Content/ComingSoon';
+import { Customers } from '@/components/ui/Admin/Content/Customers';
+import { StampsActions } from '@/components/ui/Admin/Content/StampsActions';
 import { TransactionsBookings } from '@/components/ui/Admin/Content/TransactionsBookings';
-
+import { TransactionsStamps } from '@/components/ui/Admin/Content/TransactionsStamps';
+import { VirtualConciergeCustomise } from '@/components/ui/Admin/Content/VirtualConciergeCustomise';
+import { AppSidebar } from '@/components/ui/Admin/SideBar/AdminSideBar';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,14 +26,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar';
-import { ComingSoon } from '@/components/ui/Admin/Content/ComingSoon';
-import { Customers } from '@/components/ui/Admin/Content/Customers';
-import { TransactionsStamps } from '@/components/ui/Admin/Content/TransactionsStamps';
-import { VirtualConciergeCustomise } from '@/components/ui/Admin/Content/VirtualConciergeCustomise';
-import { StampsActions } from '@/components/ui/Admin/Content/StampsActions';
-import { BookingsCalendar } from '@/components/ui/Admin/Content/BookingsCalendar';
-import { BookingsSchedules } from '@/components/ui/Admin/Content/BookingsSchedules';
-import { BookingsListings } from '@/components/ui/Admin/Content/BookingsListings';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('Analytics');
