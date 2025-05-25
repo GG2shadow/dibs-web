@@ -68,14 +68,18 @@ export default function Page() {
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
                   <BreadcrumbLink href="#">
-                    {activeTab.split(' ')[0]}
+                    {activeTab.startsWith('Virtual Concierge') ? 'Virtual Concierge' : activeTab.split(' ')[0]}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 {activeTab.includes(' ') && (
                   <>
                     <BreadcrumbSeparator className="hidden md:block" />
                     <BreadcrumbItem>
-                      <BreadcrumbPage>{activeTab.split(' ')[1]}</BreadcrumbPage>
+                      <BreadcrumbPage>
+                        {activeTab.startsWith('Virtual Concierge') 
+                          ? activeTab.replace('Virtual Concierge ', '')
+                          : activeTab.split(' ')[1]}
+                      </BreadcrumbPage>
                     </BreadcrumbItem>
                   </>
                 )}
