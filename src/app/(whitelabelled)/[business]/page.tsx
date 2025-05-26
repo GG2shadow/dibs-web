@@ -42,8 +42,17 @@ export default function BookingLandingPage() {
 
       const { data: listingData, error: listingError } = await supabase
         .from('listing')
-        .select('*')
-        .eq('business_id', businessData.id);
+        .select(
+          `
+          *,
+          listing_image (
+            id,
+            image_url
+          )
+        `,
+        )
+        .eq('business_id', businessData.id)
+        .eq('is_active', true);
 
       console.warn('Error when fetching listings: ', listingError);
 

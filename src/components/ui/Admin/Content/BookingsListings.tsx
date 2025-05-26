@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+
 import Image from 'next/image';
 
 import {
@@ -16,8 +17,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { ArrowUpDown, ChevronDown, MoreHorizontal, Plus } from 'lucide-react';
+import { v4 as uuidv4 } from 'uuid';
 
-import CustomerInfoModal from '@/components/ui/Admin/Modals/CustomerInfoModal';
+import { BookingsListingsCreateModal } from '@/components/ui/Admin/modals/BookingsListingsCreateModal';
+import { BookingsListingsEditModal } from '@/components/ui/Admin/modals/BookingsListingsEditModal';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -38,92 +42,268 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { BookingsListingsEditModal } from '@/components/ui/Admin/Modals/BookingsListingsEditModal';
-import { BookingsListingsCreateModal } from '@/components/ui/Admin/Modals/BookingsListingsCreateModal';
-
-export type Listing = {
-  id: string;
-  status: 'pending' | 'inactive' | 'active' | 'completed';
-  title: string;
-  shortDescription: string;
-  longDescription: string;
-  price: string;
-  isActive: boolean;
-  requiresDeposit: boolean;
-  imageUrl: string;
-  images: File[];
-};
-
-const data: Listing[] = [
-  {
-    id: 'm5gr84i9',
-    status: 'active',
-    title: 'Luxury Beach Villa',
-    shortDescription: 'Stunning ocean view with private pool',
-    longDescription: 'Experience luxury living in this stunning beach villa with private pool and ocean views.',
-    price: '500',
-    isActive: true,
-    requiresDeposit: true,
-    imageUrl: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=400&h=300&fit=crop',
-    images: [],
-  },
-  {
-    id: '3u1reuv4',
-    status: 'active',
-    title: 'Mountain Cabin',
-    shortDescription: 'Cozy retreat with fireplace',
-    longDescription: 'Escape to this cozy mountain cabin featuring a warm fireplace and stunning views.',
-    price: '300',
-    isActive: true,
-    requiresDeposit: true,
-    imageUrl: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=400&h=300&fit=crop',
-    images: [],
-  },
-  {
-    id: 'derv1ws0',
-    status: 'inactive',
-    title: 'City Apartment',
-    shortDescription: 'Modern living in downtown',
-    longDescription: 'Contemporary apartment in the heart of the city with modern amenities.',
-    price: '200',
-    isActive: false,
-    requiresDeposit: false,
-    imageUrl: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop',
-    images: [],
-  },
-  {
-    id: '5kma53ae',
-    status: 'active',
-    title: 'Garden Cottage',
-    shortDescription: 'Peaceful garden setting',
-    longDescription: 'Charming cottage surrounded by beautiful gardens and nature.',
-    price: '250',
-    isActive: true,
-    requiresDeposit: true,
-    imageUrl: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=400&h=300&fit=crop',
-    images: [],
-  },
-];
+import { supabase } from '@/lib/supabaseClient';
+import { extractStoragePath, slugify } from '@/lib/utils';
+import { Listing, ListingForm } from '@/types/listing';
 
 export function BookingsListings() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    [],
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
-  const [selectedListing, setSelectedListing] = React.useState<Listing | undefined>();
+  const [selectedListing, setSelectedListing] = React.useState<
+    Listing | undefined
+  >();
+
+  const [listings, setListings] = React.useState<Listing[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  const fetchListings = async () => {
+    setLoading(true);
+
+    const {
+      data: { user },
+      error: sessionError,
+    } = await supabase.auth.getUser();
+
+    if (sessionError || !user) {
+      console.error('No authenticated user:', sessionError?.message);
+      setListings([]);
+      setLoading(false);
+      return;
+    }
+
+    // Step 1: Get business linked to this user
+    const { data: businesses, error: businessError } = await supabase
+      .from('business')
+      .select('id')
+      .eq('user_id', user.id)
+      .limit(1);
+
+    if (businessError || !businesses?.length) {
+      console.error('No business found for user:', businessError?.message);
+      setListings([]);
+      setLoading(false);
+      return;
+    }
+
+    const businessId = businesses[0].id;
+
+    // Step 2: Get listings for the business
+    const { data: listingsData, error: listingError } = await supabase
+      .from('listing')
+      .select(
+        `
+        *,
+        listing_image (
+          id,
+          image_url
+        )
+      `,
+      )
+      .eq('business_id', businessId);
+
+    if (listingError) {
+      console.error('Failed to fetch listings:', listingError.message);
+      setListings([]);
+    } else {
+      setListings(listingsData);
+    }
+
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    fetchListings();
+  }, []);
 
   const handleEditListing = (listing: Listing) => {
     setSelectedListing(listing);
     setIsEditModalOpen(true);
   };
 
-  const handleSaveListing = (updatedListing: any) => {
-    // TODO: Implement save functionality
-    console.log('Saving listing:', updatedListing);
-    setIsEditModalOpen(false);
+  async function generateUniqueSlug(baseTitle: string): Promise<string> {
+    const baseSlug = slugify(baseTitle);
+
+    const { data: existing, error } = await supabase
+      .from('listing')
+      .select('slug')
+      .ilike('slug', `${baseSlug}%`);
+
+    if (error) throw new Error('Failed to check existing slugs');
+
+    const existingSlugs = (existing ?? []).map((item) => item.slug);
+
+    if (!existingSlugs.includes(baseSlug)) {
+      return baseSlug;
+    }
+
+    // Find the highest numeric suffix
+    let maxSuffix = 0;
+    const pattern = new RegExp(`^${baseSlug}-(\\d+)$`);
+
+    for (const slug of existingSlugs) {
+      const match = slug.match(pattern);
+      if (match) {
+        const num = parseInt(match[1]);
+        if (num > maxSuffix) maxSuffix = num;
+      }
+    }
+
+    return `${baseSlug}-${maxSuffix + 1}`;
+  }
+
+  const handleSaveListing = async (
+    originalListing: Listing | null,
+    formData: ListingForm,
+  ) => {
+    try {
+      console.log('Saving listing:', formData);
+      setIsEditModalOpen(false);
+      setLoading(true);
+
+      const isCreating = originalListing === null;
+
+      // Separate image inputs
+      const newImages = formData.images.filter((img) => img.file);
+      const retainedImageUrls = formData.images
+        .filter((img) => img.url && !img.file)
+        .map((img) => img.url);
+
+      let listingId = originalListing?.id ?? '';
+      const existingImages = originalListing?.listing_image ?? [];
+
+      const generatedSlug = await generateUniqueSlug(formData.title);
+
+      // Step 1: Create or Update listing
+      if (isCreating) {
+        const userResult = await supabase.auth.getUser();
+        const user = userResult.data.user;
+
+        if (!user) throw new Error('No authenticated user');
+
+        const { data: businessData, error: businessError } = await supabase
+          .from('business')
+          .select('id')
+          .eq('user_id', user.id)
+          .single();
+
+        if (businessError || !businessData)
+          throw new Error('User has no business profile');
+
+        const { data: newListing, error: insertError } = await supabase
+          .from('listing')
+          .insert([
+            {
+              title: formData.title,
+              description: formData.description,
+              price: parseFloat(formData.price),
+              is_active: formData.is_active,
+              business_id: businessData.id,
+              slug: generatedSlug,
+            },
+          ])
+          .select()
+          .single();
+
+        if (insertError)
+          throw new Error(`Failed to create listing: ${insertError.message}`);
+
+        listingId = newListing.id;
+      } else {
+        const { error: updateError } = await supabase
+          .from('listing')
+          .update({
+            title: formData.title,
+            description: formData.description,
+            price: parseFloat(formData.price),
+            is_active: formData.is_active,
+            slug: generatedSlug,
+          })
+          .eq('id', listingId);
+
+        if (updateError)
+          throw new Error(`Failed to update listing: ${updateError.message}`);
+      }
+
+      // Step 2: Upload new images
+      const uploadedImageUrls: string[] = [];
+
+      for (const img of newImages) {
+        const file = img.file!;
+        const filePath = `listing-images/${listingId}/${uuidv4()}-${file.name}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('listing-images')
+          .upload(filePath, file);
+
+        if (uploadError)
+          throw new Error(`Image upload failed: ${uploadError.message}`);
+
+        const { data } = supabase.storage
+          .from('listing-images')
+          .getPublicUrl(filePath);
+        uploadedImageUrls.push(data.publicUrl);
+      }
+
+      // Step 3: Insert uploaded images into DB
+      const newImageRows = uploadedImageUrls.map((url) => ({
+        listing_id: listingId,
+        image_url: url,
+      }));
+
+      if (newImageRows.length > 0) {
+        const { error: insertImageError } = await supabase
+          .from('listing_image')
+          .insert(newImageRows);
+
+        if (insertImageError)
+          throw new Error(
+            `Failed to insert image records: ${insertImageError.message}`,
+          );
+      }
+
+      // Step 4: Delete removed images (only for editing)
+      if (!isCreating && existingImages.length > 0) {
+        const removedImages = existingImages.filter(
+          (img) => !retainedImageUrls.includes(img.image_url),
+        );
+
+        if (removedImages.length > 0) {
+          const { error: deleteError } = await supabase
+            .from('listing_image')
+            .delete()
+            .in(
+              'id',
+              removedImages.map((img) => img.id),
+            );
+
+          if (deleteError)
+            throw new Error(
+              `Failed to delete removed images: ${deleteError.message}`,
+            );
+
+          // Optionally also delete from storage
+          for (const img of removedImages) {
+            const filePath = extractStoragePath(img.image_url);
+            await supabase.storage.from('listing-images').remove([filePath]);
+          }
+        }
+      }
+
+      fetchListings();
+      alert(`Listing ${isCreating ? 'created' : 'updated'} successfully!`);
+    } catch (err) {
+      const errorText =
+        err instanceof Error ? err.message : 'Failed to save listing';
+      alert(errorText);
+      setLoading(false);
+    }
   };
 
   // Move ActionsCell inside the main component
@@ -139,9 +319,13 @@ export function BookingsListings() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(row.original.id)}>
-              Copy listing ID
-            </DropdownMenuItem>
+            {row.original.id !== null ? (
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(row.original.id!)}
+              >
+                Copy listing ID
+              </DropdownMenuItem>
+            ) : null}
             <DropdownMenuSeparator />
             <DropdownMenuItem>View details</DropdownMenuItem>
             <DropdownMenuItem onClick={() => handleEditListing(row.original)}>
@@ -183,18 +367,17 @@ export function BookingsListings() {
       enableHiding: false,
     },
     {
-      accessorKey: 'status',
+      accessorKey: 'is_active',
       header: () => <div className="text-left">Status</div>,
       cell: ({ row }) => {
-        const status = row.getValue('status') as string;
-        const isActive = status === 'active' || status === 'completed';
-        
+        const isActive = row.getValue('is_active');
+
         return (
-          <Badge 
+          <Badge
             variant="secondary"
             className={`capitalize ${isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}
           >
-            {status}
+            {isActive ? 'Active' : 'Not Active'}
           </Badge>
         );
       },
@@ -204,12 +387,14 @@ export function BookingsListings() {
       header: () => <div className="text-left">Images</div>,
       cell: ({ row }) => (
         <div className="relative h-16 w-24 overflow-hidden rounded-md">
-          <Image
-            src={row.getValue('imageUrl')}
-            alt={row.getValue('title')}
-            fill
-            className="object-cover"
-          />
+          {row.getValue('imageUrl') ? (
+            <Image
+              src={row.getValue('imageUrl')}
+              alt={row.getValue('title')}
+              fill
+              className="object-cover"
+            />
+          ) : null}
         </div>
       ),
     },
@@ -224,12 +409,16 @@ export function BookingsListings() {
           <ArrowUpDown className="ml-1 h-4 w-4" />
         </div>
       ),
-      cell: ({ row }) => <div className="font-medium">{row.getValue('title')}</div>,
+      cell: ({ row }) => (
+        <div className="font-medium">{row.getValue('title')}</div>
+      ),
     },
     {
-      accessorKey: 'shortDescription',
-      header: () => <div className="text-left">Short description</div>,
-      cell: ({ row }) => <div className="text-gray-600">{row.getValue('shortDescription')}</div>,
+      accessorKey: 'description',
+      header: () => <div className="text-left">Description</div>,
+      cell: ({ row }) => (
+        <div className="text-gray-600">{row.getValue('description')}</div>
+      ),
     },
     {
       id: 'actions',
@@ -239,7 +428,7 @@ export function BookingsListings() {
   ];
 
   const table = useReactTable({
-    data,
+    data: listings,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -259,19 +448,21 @@ export function BookingsListings() {
 
   return (
     <div className="w-full pl-1">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-semibold">Booking Listings</h1>
-            <p className="text-sm text-muted-foreground">This is a list of all your bookable listings.</p>
-          </div>
-          <Button 
-            className="flex items-center gap-2"
-            onClick={() => setIsCreateModalOpen(true)}
-          >
-            <Plus className="h-4 w-4" />
-            Create listing
-          </Button>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-xl font-semibold">Booking Listings</h1>
+          <p className="text-muted-foreground text-sm">
+            This is a list of all your bookable listings.
+          </p>
         </div>
+        <Button
+          className="flex items-center gap-2"
+          onClick={() => setIsCreateModalOpen(true)}
+        >
+          <Plus className="h-4 w-4" />
+          Create listing
+        </Button>
+      </div>
       <div className="flex items-center py-4">
         <Input
           placeholder="Search listings..."
@@ -308,56 +499,60 @@ export function BookingsListings() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext(),
-                      )}
-                    </TableCell>
-                  ))}
+      {loading ? (
+        <div className="p-10 text-center">Loading listings...</div>
+      ) : (
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{' '}
@@ -382,21 +577,21 @@ export function BookingsListings() {
           </Button>
         </div>
       </div>
-      
+
       <BookingsListingsEditModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         listing={selectedListing!}
         onSave={handleSaveListing}
       />
-      
+
       <BookingsListingsCreateModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onCreate={(newListing) => {
-          // TODO: Implement create functionality for new listing
           console.log('Creating new listing:', newListing);
           setIsCreateModalOpen(false);
+          handleSaveListing(null, newListing);
         }}
       />
     </div>

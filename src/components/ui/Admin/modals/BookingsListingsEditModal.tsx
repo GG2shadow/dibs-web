@@ -1,28 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { X, Upload } from 'lucide-react';
+
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
-
-interface BookingListing {
-  title: string;
-  shortDescription: string;
-  longDescription: string;
-  price: string;
-  isActive: boolean;
-  requiresDeposit: boolean;
-  images: File[];
-}
+import { Listing, ListingForm, mapListingToForm } from '@/types/listing';
 
 interface BookingsListingsEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  listing: BookingListing;
-  onSave?: (updatedListing: BookingListing) => void;
+  listing: Listing;
+  onSave?: (originalListing: Listing | null, formData: ListingForm) => void;
 }
 
 export function BookingsListingsEditModal({
@@ -31,61 +23,97 @@ export function BookingsListingsEditModal({
   listing,
   onSave,
 }: BookingsListingsEditModalProps) {
-  const [formData, setFormData] = useState<BookingListing>(listing);
+  const [formData, setFormData] = useState<ListingForm | null>(null);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  useEffect(() => {
+    if (listing) {
+      setFormData(mapListingToForm(listing));
+    }
+  }, [listing]);
+
+  if (!listing || !isOpen || !formData) return null;
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData((prev) =>
+      prev
+        ? {
+            ...prev,
+            [name]: value,
+          }
+        : null,
+    );
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const fileArray = Array.from(e.target.files);
-      setFormData(prev => ({
-        ...prev,
-        images: [...prev.images, ...fileArray]
+      const fileArray = Array.from(e.target.files).map((file) => ({
+        file,
       }));
+
+      setFormData((prev) =>
+        prev
+          ? {
+              ...prev,
+              images: [...prev.images, ...fileArray],
+            }
+          : null,
+      );
     }
   };
 
+  const handleRemoveImage = (index: number) => {
+    setFormData((prev) =>
+      prev
+        ? {
+            ...prev,
+            images: prev.images.filter((_, i) => i !== index),
+          }
+        : null,
+    );
+  };
+
   const handleToggleChange = (name: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [name]: !prev[name as keyof typeof prev]
-    }));
+    setFormData((prev) =>
+      prev
+        ? {
+            ...prev,
+            [name]: !prev[name as keyof typeof prev],
+          }
+        : null,
+    );
   };
 
   const handleSave = () => {
     if (onSave) {
-      onSave(formData);
+      onSave(listing, formData);
     }
     onClose();
   };
 
-  if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Modal backdrop */}
-      <div className="fixed inset-0 bg-black/50 transition-opacity" aria-hidden="true" />
-      
+      <div
+        className="fixed inset-0 bg-black/50 transition-opacity"
+        aria-hidden="true"
+      />
       {/* Modal content container */}
       <div className="flex min-h-screen items-center justify-center p-4">
-        <div 
+        <div
           className={cn(
-            "relative w-full max-w-2xl transform overflow-hidden rounded-lg bg-background p-6 shadow-lg transition-all",
-            "data-[state=open]:animate-in data-[state=closed]:animate-out",
-            "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-            "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+            'bg-background relative w-full max-w-2xl transform overflow-hidden rounded-lg p-6 shadow-lg transition-all',
+            'data-[state=open]:animate-in data-[state=closed]:animate-out',
+            'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
+            'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
           )}
         >
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+            className="ring-offset-background focus:ring-ring absolute top-4 right-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none"
           >
             <X className="size-4" />
             <span className="sr-only">Close</span>
@@ -93,14 +121,16 @@ export function BookingsListingsEditModal({
 
           {/* Modal content */}
           <div className="space-y-6">
-            <h2 className="text-lg font-semibold leading-none tracking-tight">
+            <h2 className="text-lg leading-none font-semibold tracking-tight">
               Edit listing
             </h2>
 
             <form className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="title" className="font-['Inter']">Title</Label>
+                  <Label htmlFor="title" className="font-['Inter']">
+                    Title
+                  </Label>
                   <Input
                     id="title"
                     name="title"
@@ -110,17 +140,21 @@ export function BookingsListingsEditModal({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="short-description" className="font-['Inter']">Short description</Label>
+                  <Label htmlFor="description" className="font-['Inter']">
+                    Description
+                  </Label>
                   <Input
-                    id="short-description"
-                    name="shortDescription"
-                    value={formData.shortDescription}
+                    id="description"
+                    name="description"
+                    value={formData.description}
                     onChange={handleInputChange}
-                    placeholder="Enter short description"
+                    placeholder="Enter description"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="long-description" className="font-['Inter']">Long description</Label>
+                {/* <div className="space-y-2">
+                  <Label htmlFor="long-description" className="font-['Inter']">
+                    Long description
+                  </Label>
                   <Textarea
                     id="long-description"
                     name="longDescription"
@@ -128,18 +162,21 @@ export function BookingsListingsEditModal({
                     onChange={handleInputChange}
                     placeholder="Enter long description"
                   />
-                </div>
+                </div> */}
                 <div className="space-y-2">
-                  <Label htmlFor="images" className="font-['Inter']">Images</Label>
+                  <Label htmlFor="images" className="font-['Inter']">
+                    Images
+                  </Label>
                   <div className="flex flex-col gap-2">
                     <label
                       htmlFor="images"
-                      className="relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800"
+                      className="relative flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed hover:bg-gray-50 dark:hover:bg-gray-800"
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                        <Upload className="w-8 h-8 mb-3 text-gray-400" />
+                        <Upload className="mb-3 h-8 w-8 text-gray-400" />
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                          <span className="font-semibold">Click to upload</span> or drag and drop
+                          <span className="font-semibold">Click to upload</span>{' '}
+                          or drag and drop
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
                           PNG, JPG or JPEG (MAX. 800x400px)
@@ -155,15 +192,35 @@ export function BookingsListingsEditModal({
                         className="hidden"
                       />
                     </label>
-                    {formData.images.length > 0 && (
-                      <p className="text-sm text-muted-foreground">
+                    {formData && formData.images.length > 0 && (
+                      <p className="text-muted-foreground text-sm">
                         {formData.images.length} image(s) selected
                       </p>
                     )}
                   </div>
                 </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {formData.images.map((img, index) => (
+                    <div key={index} className="group relative">
+                      <img
+                        src={img.url ?? URL.createObjectURL(img.file!)}
+                        alt={`Image ${index + 1}`}
+                        className="h-24 w-full rounded object-cover"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(index)}
+                        className="absolute top-1 right-1 z-10 rounded-full bg-white p-1 text-red-600 shadow hover:bg-red-100"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
                 <div className="space-y-2">
-                  <Label htmlFor="price" className="font-['Inter']">Price per pax</Label>
+                  <Label htmlFor="price" className="font-['Inter']">
+                    Price per pax
+                  </Label>
                   <Input
                     id="price"
                     name="price"
@@ -176,12 +233,16 @@ export function BookingsListingsEditModal({
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                      <Label htmlFor="isActive" className="font-['Inter']">Active Listing</Label>
-                      <p className="text-sm text-muted-foreground">Make this listing available for bookings</p>
+                      <Label htmlFor="isActive" className="font-['Inter']">
+                        Active Listing
+                      </Label>
+                      <p className="text-muted-foreground text-sm">
+                        Make this listing available for bookings
+                      </p>
                     </div>
                     <Switch
                       id="isActive"
-                      checked={formData.isActive}
+                      checked={formData.is_active}
                       onCheckedChange={() => handleToggleChange('isActive')}
                     />
                   </div>
@@ -193,13 +254,13 @@ export function BookingsListingsEditModal({
             <div className="mt-6 flex justify-end gap-2">
               <button
                 onClick={onClose}
-                className="inline-flex h-9 items-center justify-center rounded-lg border border-input bg-background px-4 text-sm font-semibold shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring inline-flex h-9 items-center justify-center rounded-lg border px-4 text-sm font-semibold shadow-sm transition-colors focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="inline-flex h-9 items-center justify-center rounded-lg bg-dibs-red px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                className="bg-dibs-red focus-visible:ring-ring inline-flex h-9 items-center justify-center rounded-lg px-4 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-red-400 focus-visible:ring-1 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
               >
                 Save
               </button>

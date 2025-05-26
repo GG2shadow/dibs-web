@@ -12,3 +12,17 @@ export function formatCurrency(amount: number) {
     maximumFractionDigits: 0,
   }).format(amount);
 }
+
+export function extractStoragePath(url: string): string {
+  const urlObj = new URL(url);
+  return urlObj.pathname.split('/').slice(3).join('/');
+}
+
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // remove non-word characters
+    .replace(/[\s_-]+/g, '-') // collapse whitespace/dashes
+    .replace(/^-+|-+$/g, ''); // trim starting/ending dashes
+}

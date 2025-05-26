@@ -34,7 +34,11 @@ const OurProductsList = ({ listings, business }: OurProductsListProps) => {
             >
               <div className="aspect-[4/3] overflow-hidden">
                 <img
-                  src={listing.image}
+                  src={
+                    listing.listing_image.length > 0
+                      ? listing.listing_image[0].image_url
+                      : undefined
+                  }
                   alt={listing.title}
                   className="h-full w-full object-cover transition-transform group-hover:scale-105"
                 />
