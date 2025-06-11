@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 
 import { GoShare } from 'react-icons/go';
 
-import OurAnnouncementBanner from '@/components/ui/OurComponents/OurAnnouncementBanner';
-import { OurImageCarousel } from '@/components/ui/OurComponents/OurImageCarousel';
-import { OurBookingForm } from '@/components/ui/OurComponents/OurBookingForm';
-import { ListingTitle } from '@/components/ui/ListingTitle';
 import { ListingDescription } from '@/components/ui/ListingDescription';
+import { ListingTitle } from '@/components/ui/ListingTitle';
+import OurAnnouncementBanner from '@/components/ui/OurComponents/OurAnnouncementBanner';
+import { OurBookingForm } from '@/components/ui/OurComponents/OurBookingForm';
+import { OurImageCarousel } from '@/components/ui/OurComponents/OurImageCarousel';
 import OurWatermarkFooter from '@/components/ui/OurComponents/OurWatermarkFooter';
 
 // Sample image data for the carousel
@@ -31,11 +31,11 @@ const ListingPage = () => {
   return (
     <div className="listing-container min-h-screen w-screen">
       <OurAnnouncementBanner></OurAnnouncementBanner>
-      <div className="container mx-auto px-4 py-8 mt-10">
-        <OurImageCarousel images={images} className="mb-8" />
-        <div className="flex flex-col md:flex-row gap-8">
+      <div className="container mx-auto mt-10 px-4 py-8">
+        <div className="flex flex-col gap-8 md:flex-row">
           <div className="md:w-[60%]">
-            <ListingTitle 
+            <OurImageCarousel images={images} className="mb-8" />
+            <ListingTitle
               title="1-on-1 Expert Consultation"
               description="Get personalized guidance from our experts"
               className="mb-8"
