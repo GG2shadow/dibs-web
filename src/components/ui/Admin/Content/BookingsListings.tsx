@@ -43,6 +43,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { supabase } from '@/lib/supabaseClient';
+import { uploadListingImage } from '@/lib/uploadListingImage';
 import { extractStoragePath, slugify } from '@/lib/utils';
 import { Listing, ListingForm } from '@/types/listing';
 
@@ -65,57 +66,30 @@ export function BookingsListings() {
 
   const fetchListings = async () => {
     setLoading(true);
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    const {
-      data: { user },
-      error: sessionError,
-    } = await supabase.auth.getUser();
+      const res = await fetch('/api/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user?.id }),
+      });
+      const json = await res.json();
 
-    if (sessionError || !user) {
-      console.error('No authenticated user:', sessionError?.message);
+      if (res.ok) {
+        setListings(json.listings);
+      } else {
+        console.error('Error loading listings:', json.error);
+        setListings([]);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
       setListings([]);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // Step 1: Get business linked to this user
-    const { data: businesses, error: businessError } = await supabase
-      .from('business')
-      .select('id')
-      .eq('user_id', user.id)
-      .limit(1);
-
-    if (businessError || !businesses?.length) {
-      console.error('No business found for user:', businessError?.message);
-      setListings([]);
-      setLoading(false);
-      return;
-    }
-
-    const businessId = businesses[0].id;
-
-    // Step 2: Get listings for the business
-    const { data: listingsData, error: listingError } = await supabase
-      .from('listing')
-      .select(
-        `
-        *,
-        listing_image (
-          id,
-          image_url
-        )
-      `,
-      )
-      .eq('business_id', businessId);
-
-    if (listingError) {
-      console.error('Failed to fetch listings:', listingError.message);
-      setListings([]);
-    } else {
-      setListings(listingsData);
-    }
-
-    setLoading(false);
   };
 
   React.useEffect(() => {
@@ -163,13 +137,18 @@ export function BookingsListings() {
     formData: ListingForm,
   ) => {
     try {
-      console.log('Saving listing:', formData);
       setIsEditModalOpen(false);
       setLoading(true);
 
       const isCreating = originalListing === null;
 
-      // Separate image inputs
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
+
+      if (userError || !user) throw new Error('No authenticated user');
+
       const newImages = formData.images.filter((img) => img.file);
       const retainedImageUrls = formData.images
         .filter((img) => img.url && !img.file)
@@ -180,87 +159,43 @@ export function BookingsListings() {
 
       const generatedSlug = await generateUniqueSlug(formData.title);
 
-      // Step 1: Create or Update listing
-      if (isCreating) {
-        const userResult = await supabase.auth.getUser();
-        const user = userResult.data.user;
-
-        if (!user) throw new Error('No authenticated user');
-
-        const { data: businessData, error: businessError } = await supabase
-          .from('business')
-          .select('id')
-          .eq('user_id', user.id)
-          .single();
-
-        if (businessError || !businessData)
-          throw new Error('User has no business profile');
-
-        const { data: newListing, error: insertError } = await supabase
-          .from('listing')
-          .insert([
-            {
-              title: formData.title,
-              description: formData.description,
-              price: parseFloat(formData.price),
-              is_active: formData.is_active,
-              business_id: businessData.id,
-              slug: generatedSlug,
-            },
-          ])
-          .select()
-          .single();
-
-        if (insertError)
-          throw new Error(`Failed to create listing: ${insertError.message}`);
-
-        listingId = newListing.id;
-      } else {
-        const { error: updateError } = await supabase
-          .from('listing')
-          .update({
-            title: formData.title,
-            description: formData.description,
-            price: parseFloat(formData.price),
-            is_active: formData.is_active,
+      // Step 1: Create or update the listing via new unified API
+      const res = await fetch('/api/listings/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          formData: {
+            ...formData,
             slug: generatedSlug,
-          })
-          .eq('id', listingId);
+          },
+          listingId: originalListing?.id ?? null,
+        }),
+      });
 
-        if (updateError)
-          throw new Error(`Failed to update listing: ${updateError.message}`);
-      }
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || 'Failed to save listing');
+
+      listingId = result.listingId;
 
       // Step 2: Upload new images
       const uploadedImageUrls: string[] = [];
-
       for (const img of newImages) {
         const file = img.file!;
-        const filePath = `listing-images/${listingId}/${uuidv4()}-${file.name}`;
-
-        const { error: uploadError } = await supabase.storage
-          .from('listing-images')
-          .upload(filePath, file);
-
-        if (uploadError)
-          throw new Error(`Image upload failed: ${uploadError.message}`);
-
-        const { data } = supabase.storage
-          .from('listing-images')
-          .getPublicUrl(filePath);
-        uploadedImageUrls.push(data.publicUrl);
+        const publicUrl = await uploadListingImage(listingId, file);
+        uploadedImageUrls.push(publicUrl);
       }
 
-      // Step 3: Insert uploaded images into DB
-      const newImageRows = uploadedImageUrls.map((url) => ({
-        listing_id: listingId,
-        image_url: url,
-      }));
-
-      if (newImageRows.length > 0) {
+      // Step 3: Insert uploaded images
+      if (uploadedImageUrls.length > 0) {
         const { error: insertImageError } = await supabase
           .from('listing_image')
-          .insert(newImageRows);
+          .insert(
+            uploadedImageUrls.map((url) => ({
+              listing_id: listingId,
+              image_url: url,
+            })),
+          );
 
         if (insertImageError)
           throw new Error(
@@ -268,19 +203,19 @@ export function BookingsListings() {
           );
       }
 
-      // Step 4: Delete removed images (only for editing)
+      // Step 4: Delete removed images (edit only)
       if (!isCreating && existingImages.length > 0) {
-        const removedImages = existingImages.filter(
+        const removed = existingImages.filter(
           (img) => !retainedImageUrls.includes(img.image_url),
         );
 
-        if (removedImages.length > 0) {
+        if (removed.length > 0) {
           const { error: deleteError } = await supabase
             .from('listing_image')
             .delete()
             .in(
               'id',
-              removedImages.map((img) => img.id),
+              removed.map((img) => img.id),
             );
 
           if (deleteError)
@@ -288,8 +223,7 @@ export function BookingsListings() {
               `Failed to delete removed images: ${deleteError.message}`,
             );
 
-          // Optionally also delete from storage
-          for (const img of removedImages) {
+          for (const img of removed) {
             const filePath = extractStoragePath(img.image_url);
             await supabase.storage.from('listing-images').remove([filePath]);
           }
