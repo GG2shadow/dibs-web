@@ -383,20 +383,29 @@ export function BookingsListings() {
       },
     },
     {
-      accessorKey: 'imageUrl',
+      accessorKey: 'listing_image',
       header: () => <div className="text-left">Images</div>,
-      cell: ({ row }) => (
-        <div className="relative h-16 w-24 overflow-hidden rounded-md">
-          {row.getValue('imageUrl') ? (
-            <Image
-              src={row.getValue('imageUrl')}
-              alt={row.getValue('title')}
-              fill
-              className="object-cover"
-            />
-          ) : null}
-        </div>
-      ),
+      cell: ({ row }) => {
+        const images = row.getValue('listing_image') as { image_url: string }[];
+        const firstImage = images?.[0]?.image_url;
+
+        return (
+          <div className="relative h-16 w-24 overflow-hidden rounded-md">
+            {firstImage ? (
+              <Image
+                src={firstImage}
+                alt={row.getValue('title')}
+                fill
+                className="object-cover"
+              />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center text-sm text-gray-400">
+                No Image
+              </div>
+            )}
+          </div>
+        );
+      },
     },
     {
       accessorKey: 'title',

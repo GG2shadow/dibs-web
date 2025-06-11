@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // next.config.js
 
 const withMDX = require('@next/mdx')({
@@ -12,7 +13,7 @@ const nextConfig = {
   },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'xgidujoanslsfwwtqidj.supabase.co'],
   },
 };
 
