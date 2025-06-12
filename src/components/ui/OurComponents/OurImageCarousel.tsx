@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
 
 interface OurImageCarouselProps {
@@ -16,14 +16,24 @@ export function OurImageCarousel({ images, className }: OurImageCarouselProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const thumbnailRefs = useRef<Record<number, HTMLDivElement | null>>({});
+  const viewAllThumbnailRefs = useRef<Record<number, HTMLDivElement | null>>(
+    {},
+  );
   const getThumbnailWindow = () => {
     return images.map((img, index) => ({ img, realIndex: index }));
   };
 
   useEffect(() => {
     const el = thumbnailRefs.current[selectedImage];
+    const viewAllEl = viewAllThumbnailRefs.current[selectedImage];
     if (el) {
       el.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+    }
+    if (viewAllEl) {
+      viewAllEl.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });
@@ -95,25 +105,70 @@ export function OurImageCarousel({ images, className }: OurImageCarouselProps) {
 
       {/* Optional Dialog for viewing all */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
-          <div className="grid gap-4">
-            {images.map((image, index) => (
-              <div
-                key={index}
-                className="relative aspect-[4/3] overflow-hidden rounded-lg"
-              >
+        <DialogContent className="w-full max-w-[90vw] overflow-auto p-4 md:max-w-3xl">
+          <DialogTitle style={{ display: 'none' }}>View All Images</DialogTitle>
+          <div className="flex w-full flex-col items-center gap-4">
+            {/* Main Image */}
+            <div className="w-full max-w-2xl">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-gray-100">
+                {/* Left Arrow */}
+                <button
+                  onClick={() =>
+                    setSelectedImage((prev) => Math.max(prev - 1, 0))
+                  }
+                  disabled={selectedImage === 0}
+                  className="absolute top-1/2 left-2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white disabled:opacity-40"
+                >
+                  ←
+                </button>
+
+                {/* Right Arrow */}
+                <button
+                  onClick={() =>
+                    setSelectedImage((prev) =>
+                      Math.min(prev + 1, images.length - 1),
+                    )
+                  }
+                  disabled={selectedImage === images.length - 1}
+                  className="absolute top-1/2 right-2 z-10 -translate-y-1/2 rounded-full bg-white/80 p-2 shadow hover:bg-white disabled:opacity-40"
+                >
+                  →
+                </button>
+
                 <Image
-                  src={image}
-                  alt={`Listing image ${index + 1}`}
+                  src={images[selectedImage]}
+                  alt={`Main image ${selectedImage + 1}`}
                   fill
                   className="object-cover"
-                  onClick={() => {
-                    setSelectedImage(index);
-                    setIsDialogOpen(false);
-                  }}
                 />
               </div>
-            ))}
+            </div>
+
+            {/* Thumbnails */}
+            <div className="flex w-full max-w-2xl gap-3 overflow-x-auto">
+              {images.map((image, index) => (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    viewAllThumbnailRefs.current[index] = el;
+                  }}
+                  className={cn(
+                    'relative aspect-[4/3] w-28 flex-shrink-0 cursor-pointer overflow-hidden rounded-lg border-2 transition-all',
+                    selectedImage === index
+                      ? 'border-blue-500'
+                      : 'border-transparent hover:border-gray-300',
+                  )}
+                  onClick={() => setSelectedImage(index)}
+                >
+                  <Image
+                    src={image}
+                    alt={`Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </DialogContent>
       </Dialog>
